@@ -1,3 +1,8 @@
+#server.py
+
+import psycopg2
+import psycopg2.extras
+
 import os
 import uuid
 from flask import Flask, session
@@ -7,6 +12,14 @@ app = Flask(__name__, static_url_path='')
 app.config['SECRET_KEY'] = 'secret!'
 
 socketio = SocketIO(app)
+
+def connectToDB():
+  connectionString = 'dbname=irc_db user=postgres password=pg host=localhost'
+  try:
+    return psycopg2.connect(connectionString)
+  except:
+    print("Can't connect to database")
+
 
 messages = [{'text':'test', 'name':'testName'}]
 users = {}
@@ -23,7 +36,7 @@ def updateRoster():
     emit('roster', names, broadcast=True)
     
 
-@socketio.on('connect', namespace='/chat')
+@socketio.on('connect', namespace='/chat') #handles the connect event
 def test_connect():
     session['uuid']=uuid.uuid1()
     session['username']='starter name'
