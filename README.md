@@ -35,3 +35,14 @@ Welcome to your IRC project on Cloud9 IDE!
 ### You must host your code on github
 
 
+Things to check if it isn't working.
+Did we git add the file?
+Did we git commit the file?
+Did we git push?
+Onto the right branch?
+Did you do a pull request?
+Did I merge it on github?
+Did I actually pull it?
+
+
+

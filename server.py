@@ -32,7 +32,6 @@ def test_connect():
     users[session['uuid']]={'username':'New User'}
     updateRoster()
 
-
     for message in messages:
         emit('message', message)
 
