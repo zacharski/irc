@@ -9,11 +9,14 @@ CREATE TABLE IF NOT EXISTS users (
 	PRIMARY KEY (id)
 );
 
+INSERT INTO users (id, username, password) VALUES 
+(DEFAULT, 'SpiderBall', 'sb'),
+(DEFAULT, 'MidnaPeach', 'mp');
 
 CREATE TABLE IF NOT EXISTS messages (
 	message_id serial,
 	original_poster_id int NOT NULL,
-	message_content bytea,
+	message_content bytea NULL,
 	PRIMARY KEY (message_id)
 );
 
