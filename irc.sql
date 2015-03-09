@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS messages (
 	message_id serial,
 	original_poster_id int NOT NULL,
-	message_content binary,
+	message_content varchar(200),
 	PRIMARY KEY (message_id)
 );
 
