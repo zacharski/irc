@@ -87,7 +87,7 @@ def on_login(pw):
     print 'login '  + pw
     #users[session['uuid']]={'username':message}
     #updateRoster()
-    
+    #merge test
     
 #DISCONNECT
 @socketio.on('disconnect', namespace='/chat')
