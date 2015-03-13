@@ -45,8 +45,8 @@ if(showhide == "show"){
 
 //CONNECT - doesn't emit, only sets.
         socket.on('connect', function () {
-          console.log('we are connected!');
-          $scope.setName();
+          console.log('HELLO?! we are connected!');
+	  $scope.setName();
         });
 
 //MESSAGE - doesn't emit, applies? 
@@ -63,7 +63,6 @@ if(showhide == "show"){
           $scope.roster = names;
           $scope.$apply();
         });
-        
 
 //These things look like definitions more than anything else
 //SEND comment is around line 152

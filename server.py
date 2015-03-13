@@ -19,7 +19,7 @@ def connectToDB():
   try:
     return psycopg2.connect(connectionString)
   except:
-    print("Can't connect to database")
+    print("Can't connect to database - in server.py")
 
 #messages = [{'text':'test', 'name':'testName'}]
 #users = {}
@@ -47,8 +47,12 @@ def test_connect():
     #right now it is using sessions, I think, and it should be checking against the db?
     session['uuid']=uuid.uuid1()#each time a uuid is called, a new number is returned
     session['username']='starter name'
-    print 'connected'
-
+    #print 'connected'
+    
+    try:
+        connectToDB()
+    except:
+        print ("Something went wrong :< Couldn't connect to DB I'm in server.py")
     #new user is called when the database runs?    
     users[session['uuid']]={'username':'New User'}
     #updateRoster is called here. duh. it goes to...
@@ -86,7 +90,6 @@ def on_login(pw):
     print 'login '  + pw
     #users[session['uuid']]={'username':message}
     #updateRoster()
-    
     
 #DISCONNECT
 @socketio.on('disconnect', namespace='/chat')
