@@ -21,9 +21,8 @@ def connectToDB():
   except:
     print("Can't connect to database - in server.py")
 
-
-messages = [{'text':'test', 'name':'testName'}]
-users = {}
+#messages = [{'text':'test', 'name':'testName'}]
+#users = {}
 
 #WHat the actual is this thing doing.
 def updateRoster():
@@ -46,7 +45,7 @@ def updateRoster():
 @socketio.on('connect', namespace='/chat') #handles the connect event
 def test_connect():
     #right now it is using sessions, I think, and it should be checking against the db?
-    session['uuid']=uuid.uuid1()
+    session['uuid']=uuid.uuid1()#each time a uuid is called, a new number is returned
     session['username']='starter name'
     #print 'connected'
     
