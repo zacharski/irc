@@ -23,7 +23,8 @@ def connectToDB():
     print("Can't connect to database - in server.py")
 
 #messages = [{'text':'test', 'name':'testName'}]
-#users = {}
+user_select_string = "SELECT * FROM users;"
+users = 
 
 #WHat the actual is this thing doing.
 def updateRoster():
@@ -93,7 +94,7 @@ def on_identify(message):
     #message is the username here.
     users[session['uuid']]={'username':message}
     updateRoster()
-
+PENIS
 #LOGIN
 #around line 85 index.html $scope.processLogin - emits login, $scope.password
 @socketio.on('login', namespace='/chat')
