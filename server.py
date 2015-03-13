@@ -27,6 +27,8 @@ users =
 
 #WHat the actual is this thing doing.
 def updateRoster():
+    conn = connectToDB()
+    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     names = []
     #need to check in database here?
     for user_id in users:
@@ -45,28 +47,35 @@ def updateRoster():
 #I think this is where we wire in the database?
 @socketio.on('connect', namespace='/chat') #handles the connect event
 def test_connect():
+    conn = connectToDB()
+    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     #right now it is using sessions, I think, and it should be checking against the db?
     session['uuid']=uuid.uuid1()#each time a uuid is called, a new number is returned
     session['username']='starter name'
     #print 'connected'
     
-    try:
-        connectToDB()
-    except:
-        print ("Something went wrong :< Couldn't connect to DB I'm in server.py")
     #new user is called when the database runs?    
     users[session['uuid']]={'username':'New User'}
+    
     #updateRoster is called here. duh. it goes to...
     updateRoster()
 
-    
     for message in messages:
         emit('message', message)
+    
+    try:
+        #this will be the query 
+        print("This will be a query")
+    except:
+        print ("I didn't get to do the query.")
+    
 
 #MESSAGE
 #THIS IS ON LINE 55 IN INDEX.HTML $scope.send - emits message and text
 @socketio.on('message', namespace='/chat')
 def new_message(message):
+    conn = connectToDB()
+    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     #tmp = {'text':message, 'name':'testName'}
     tmp = {'text':message, 'name':users[session['uuid']]['username']}
     messages.append(tmp)
@@ -77,6 +86,8 @@ def new_message(message):
 # $scope.setName2 also emits identify, $scope.name2
 @socketio.on('identify', namespace='/chat')
 def on_identify(message):
+    conn = connectToDB()
+    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     print 'identify' + message
     #the message here is where we need to connect to check against the database??
     #message is the username here.
@@ -87,6 +98,8 @@ def on_identify(message):
 #around line 85 index.html $scope.processLogin - emits login, $scope.password
 @socketio.on('login', namespace='/chat')
 def on_login(pw):
+    conn = connectToDB()
+    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     #pw is whatever was typed into the password box
     print 'login '  + pw
     #users[session['uuid']]={'username':message}
