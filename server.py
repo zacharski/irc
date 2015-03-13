@@ -44,12 +44,8 @@ def updateRoster():
 #I think this is where we wire in the database?
 @socketio.on('connect', namespace='/chat') #handles the connect event
 def test_connect():
-<<<<<<< HEAD
-    session['uuid']=uuid.uuid1() #each time a uuid is called, a new number is returned
-=======
     #right now it is using sessions, I think, and it should be checking against the db?
-    session['uuid']=uuid.uuid1()
->>>>>>> d116a35f3741ae542a5b18fef58070ffd7c36687
+    session['uuid']=uuid.uuid1()#each time a uuid is called, a new number is returned
     session['username']='starter name'
     print 'connected'
 
