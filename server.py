@@ -20,9 +20,8 @@ def connectToDB():
   except:
     print("Can't connect to database")
 
-
-messages = [{'text':'test', 'name':'testName'}]
-users = {}
+#messages = [{'text':'test', 'name':'testName'}]
+#users = {}
 
 def updateRoster():
     names = []
@@ -38,7 +37,7 @@ def updateRoster():
 
 @socketio.on('connect', namespace='/chat') #handles the connect event
 def test_connect():
-    session['uuid']=uuid.uuid1()
+    session['uuid']=uuid.uuid1() #each time a uuid is called, a new number is returned
     session['username']='starter name'
     print 'connected'
     
