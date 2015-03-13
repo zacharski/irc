@@ -35,80 +35,78 @@ if(showhide == "show"){
 }
 }
 
-
       function ChatController($scope) {
         var socket = io.connect('https://' + document.domain + ':' + location.port + '/chat');
-
         //var socket = io.connect();
-
         $scope.messages = [];
         $scope.roster = [];
         $scope.name = '';
         $scope.text = '';
 
+//CONNECT - doesn't emit, only sets.
         socket.on('connect', function () {
           console.log('we are connected!');
           $scope.setName();
         });
 
+//MESSAGE - doesn't emit, applies? 
+//scope.messages -  maybe like the conn.commit?
         socket.on('message', function (msg) {
           console.log(msg);
           $scope.messages.push(msg);
           $scope.$apply();
         });
 
+//ROSTER STUFF? this doesn't emit anything, but it does apply stuff
         socket.on('roster', function (names) {
           console.log("Roster update:" +JSON.stringify(names))
           $scope.roster = names;
           $scope.$apply();
         });
+        
 
+//These things look like definitions more than anything else
+//SEND comment is around line 152
         $scope.send = function send() {
           console.log('Sending message:', $scope.text);
           socket.emit('message', $scope.text);
-          $scope.text = '';
+          $scope.text = ''; 
         };
 
+//IDENTIFY STUFF
         $scope.setName = function setName() {
           socket.emit('identify', $scope.name);
         };
         $scope.setName2 = function setName2() {
-          
           socket.emit('identify', $scope.name2);
           $scope.name = $scope.name2;
-          $scope.$apply();
+          $scope.$apply();5
         };
 
+//PROCESS LOGIN
         $scope.processLogin = function processLogin() {
           console.log("Trying to log in");
           login('hide');
-          socket.emit('login', $scope.password);
+          //this is what happens when html file says processLogin
+          //can use a dictionary to do stuff
+            //save pass and username in stuff
+          socket.emit('login', $scope.password); //need username here too //only has two parameters
         };
-
-
-
       }
     </script>
   </head>
   <body onload="javascript:login('show')">
     
-
-    
-    
-    
-    
-    
     <div class="container" ng-controller="ChatController">
-      
       
           <div id="popupbox"> 
 <form ng-submit="processLogin()">
+<!-- this calls stuff from above -->
 <center>Username:</center>
 <center><input type="text"  ng-model="name2" ng-change="setName2()" placeholder="Username" size="14" /></center>
 <center>Password:</center>
 <center><input  ng-model="password" type="password" size="14" /></center>
 <center><input type="submit" class="span1 btn btn-primary" value="Send" ng-disabled="!password"></center>
-
 </form>
 <br />
 
@@ -116,10 +114,6 @@ if(showhide == "show"){
 
       
       <!-- does something go here? -->
-      
-      
-      
-      
       
       
       <div class="navbar navbar-fixed-top navbar-inverse">
@@ -157,6 +151,8 @@ if(showhide == "show"){
             </tbody>
           </table>
           <div class="row controls">
+            
+            <!-- THIS IS SEND -->
             <form ng-submit="send()">
               <div class="span2" ><input type="text" class="input-block-level" ng-model="name" readonly="readonly" placeholder="Your Name"></div>
               <div class="input-append span7">
