@@ -18,5 +18,6 @@ CREATE TABLE IF NOT EXISTS messages (
 );
 
 INSERT INTO users (id, username, password) 
-VALUES (DEFAULT, 'SpiderBall', 'sb'), 
+VALUES 
+(DEFAULT, 'SpiderBall', 'sb'), 
 (DEFAULT, 'MidnaPeach', 'mp');
