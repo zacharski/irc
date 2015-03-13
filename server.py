@@ -93,7 +93,7 @@ def on_identify(message):
     #message is the username here.
     users[session['uuid']]={'username':message}
     updateRoster()
-
+PENIS
 #LOGIN
 #around line 85 index.html $scope.processLogin - emits login, $scope.password
 @socketio.on('login', namespace='/chat')
