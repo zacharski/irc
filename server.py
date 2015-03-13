@@ -22,7 +22,8 @@ def connectToDB():
     print("Can't connect to database")
 
 #messages = [{'text':'test', 'name':'testName'}]
-#users = {}
+user_select_string = "SELECT * FROM users;"
+users = 
 
 #WHat the actual is this thing doing.
 def updateRoster():
