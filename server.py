@@ -94,14 +94,17 @@ def on_identify(message):
     #message is the username here.
     users[session['uuid']]={'username':message}
     updateRoster()
+    
 #LOGIN
 #around line 85 index.html $scope.processLogin - emits login, $scope.password
 @socketio.on('login', namespace='/chat')
-def on_login(pw):
+def on_login(loginInfo):
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     #pw is whatever was typed into the password box
-    print 'login '  + pw
+    print 'login user'  + loginInfo['username']
+    print 'login pass'  + loginInfo['password']
+    
     #users[session['uuid']]={'username':message}
     #updateRoster()
     
