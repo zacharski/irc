@@ -17,16 +17,19 @@ socketio = SocketIO(app)
 def connectToDB():
   print 'in connectToDB'
 #changed the database name here from irc_db to irc  -- we called it irc.sql right?
-  connectionString = 'dbname=irc user=postgres password=pg host=localhost'
+  connectionString = 'dbname=irc_db user=postgres password=pg host=localhost'
   try:
     return psycopg2.connect(connectionString)
   except:
     print("Can't connect to database - in server.py")
 
-#messages = [{'text':'test', 'name':'testName'}]
+messages = [{'text':'test', 'name':'testName'}]
 
 #im trying to pull out all the users into this global variable
 #so that the rest of the session based code will work
+
+
+#USERS IS A DICTIONARY
 users = {} #hopefully this can be changed from update roster
 
 
