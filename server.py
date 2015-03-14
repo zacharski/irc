@@ -23,8 +23,7 @@ def connectToDB():
     print("Can't connect to database - in server.py")
 
 #messages = [{'text':'test', 'name':'testName'}]
-user_select_string = "SELECT * FROM users;"
-#users = 
+#users = {} 
 
 #WHat the actual is this thing doing.
 def updateRoster():
@@ -35,6 +34,7 @@ def updateRoster():
     for user_id in users:
         print users[user_id]['username']
         #if there is no chars in the username
+        #here we should instead check if the resultset is null
         if len(users[user_id]['username'])==0:
             names.append('Anonymous')
         else:
@@ -46,6 +46,8 @@ def updateRoster():
 
 #CONNECT    
 #I think this is where we wire in the database?
+#i believe this is actually where we start connecting to the session -Savannah
+#for right now at least
 @socketio.on('connect', namespace='/chat') #handles the connect event
 def test_connect():
     conn = connectToDB()
@@ -105,6 +107,20 @@ def on_login(loginInfo):
     print 'login user'  + loginInfo['username']
     print 'login pass'  + loginInfo['password']
     
+    user_select_string = "SELECT username FROM users WHERE username = %s AND password = %s;"
+
+    try:
+        cur.execute(user_select_string,(loginInfo['username'], loginInfo['password']));
+        print 'executed query'
+        currentUser = cur.fetchone()
+        print 'successfully fetched one value'
+
+        session['username'] = currentUser['username']
+        session['password'] = currentUser['password']
+
+        print 'Logged on as' + session['username'] + 'with pw' + session['password']
+    except:
+        print 'could not execute login query!'
     #users[session['uuid']]={'username':message}
     #updateRoster()
     
