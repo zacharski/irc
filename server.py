@@ -15,6 +15,7 @@ app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
 
 def connectToDB():
+  print 'in connectToDB'
 #changed the database name here from irc_db to irc  -- we called it irc.sql right?
   connectionString = 'dbname=irc user=postgres password=pg host=localhost'
   try:
@@ -27,6 +28,7 @@ def connectToDB():
 
 #WHat the actual is this thing doing.
 def updateRoster():
+    print 'in updateRoster'
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     names = []
@@ -50,6 +52,7 @@ def updateRoster():
 #for right now at least
 @socketio.on('connect', namespace='/chat') #handles the connect event
 def test_connect():
+    print 'in connect'
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     #right now it is using sessions, I think, and it should be checking against the db?
@@ -77,6 +80,7 @@ def test_connect():
 #THIS IS ON LINE 55 IN INDEX.HTML $scope.send - emits message and text
 @socketio.on('message', namespace='/chat')
 def new_message(message):
+    print 'in message'
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     #tmp = {'text':message, 'name':'testName'}
@@ -89,6 +93,7 @@ def new_message(message):
 # $scope.setName2 also emits identify, $scope.name2
 @socketio.on('identify', namespace='/chat')
 def on_identify(message):
+    print 'in identify'
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     print 'identify' + message
@@ -101,6 +106,7 @@ def on_identify(message):
 #around line 85 index.html $scope.processLogin - emits login, $scope.password
 @socketio.on('login', namespace='/chat')
 def on_login(loginInfo):
+    print 'IN LOGIN'
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     #pw is whatever was typed into the password box
