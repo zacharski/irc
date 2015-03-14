@@ -24,27 +24,43 @@ def connectToDB():
     print("Can't connect to database - in server.py")
 
 #messages = [{'text':'test', 'name':'testName'}]
-#users = {} 
+
+#im trying to pull out all the users into this global variable
+#so that the rest of the session based code will work
+users = {} #hopefully this can be changed from update roster
+
+
+
 
 #WHat the actual is this thing doing.
 def updateRoster():
     print 'in updateRoster'
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    names = []
-    #need to check in database here?
-    for user_id in users:
-        print users[user_id]['username']
-        #if there is no chars in the username
-        #here we should instead check if the resultset is null
-        if len(users[user_id]['username'])==0:
-            names.append('Anonymous')
-        else:
-            names.append(users[user_id]['username'])
-#This broadcasting names thing happens a lot. seems each time you call identify and login
-    print 'broadcasting names'
-    #I don't know what broadcast does?. changed it to false nothing seemed to change
-    emit('roster', names, broadcast=True)
+    users_select_string = "SELECT users FROM users;"
+    try:
+        cur.execute(users_select_string);
+        print 'executed users query'
+        users = cur.fetchall();
+        print 'fetched all the users'
+
+        names = []
+        #need to check in database here?
+        for user_id in users:
+            print users[user_id]['username']
+            #if there is no chars in the username
+            #here we should instead check if the resultset is null
+            if len(users[user_id]['username'])==0:
+                names.append('Anonymous')
+            else:
+                names.append(users[user_id]['username'])
+        #This broadcasting names thing happens a lot. seems each time you call identify 
+        #and login
+        print 'broadcasting names'
+        #I don't know what broadcast does?. changed it to false nothing seemed to change
+        emit('roster', names, broadcast=True)
+    except:
+        print 'Could not pull user roster from db'
 
 #CONNECT    
 #I think this is where we wire in the database?
@@ -58,7 +74,7 @@ def test_connect():
     #right now it is using sessions, I think, and it should be checking against the db?
     session['uuid']=uuid.uuid1()#each time a uuid is called, a new number is returned
     session['username']='starter name'
-    #print 'connected'
+    print 'connected'
     
     #new user is called when the database runs?    
     users[session['uuid']]={'username':'New User'}
