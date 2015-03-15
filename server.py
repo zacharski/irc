@@ -41,9 +41,9 @@ def updateRoster():
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     users_select_string = "SELECT users FROM users;"
     try:
-        cur.execute(users_select_string);
+        cur.execute(users_select_string)
         print 'executed users query'
-        users = cur.fetchall();
+        users = cur.fetchall()
         print 'fetched all the users'
 
         names = []
@@ -164,6 +164,9 @@ def on_login(loginInfo):
     print 'IN LOGIN'
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    #pw is whatever was typed into the password box
+   
+    #this works if it is a string.
     
     usernameVar = loginInfo['username']
     passwordVar = loginInfo['password']
@@ -177,6 +180,13 @@ def on_login(loginInfo):
         cur.execute(user_select_string,(usernameVar, passwordVar));
         print 'executed query'
         currentUser = cur.fetchone()
+
+        if(currentUser==null):
+            print 'this is not a valid login, please try again'
+        else:
+            continue
+
+
         print 'successfully fetched one value'
         
         print 'sessionuser:' + session['username']
