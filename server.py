@@ -39,9 +39,9 @@ def updateRoster():
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     users_select_string = "SELECT users FROM users;"
     try:
-        cur.execute(users_select_string);
+        cur.execute(users_select_string)
         print 'executed users query'
-        users = cur.fetchall();
+        users = cur.fetchall()
         print 'fetched all the users'
 
         names = []
