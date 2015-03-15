@@ -181,24 +181,22 @@ def on_login(loginInfo):
         print 'executed query'
         currentUser = cur.fetchone()
 
-        if(currentUser==null):
+        if(currentUser is null):
             print 'this is not a valid login, please try again'
         else:
-            continue
-
-
-        print 'successfully fetched one value'
+            
+            print 'successfully fetched one value'
         
-        print 'sessionuser:' + session['username']
-        #print 'sessionpass:' + session['password']        
+            print 'sessionuser:' + session['username']
+            #print 'sessionpass:' + session['password']        
         
-        print 'currentUser:' + str(currentUser)
-        #print 'sessionpass:' + session['password']        
+            print 'currentUser:' + str(currentUser)
+            #print 'sessionpass:' + session['password']        
         
-        session['username'] = currentUser['username']
-        #session['password'] = currentUser['password']
+            session['username'] = currentUser['username']
+            #session['password'] = currentUser['password']
 
-        print 'Logged on as' + session['username'] #+ 'with pw' + session['password']
+            print 'Logged on as' + session['username'] #+ 'with pw' + session['password']
     except:
         print 'could not execute login query!'
         traceback.print_exc()
