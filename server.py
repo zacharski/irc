@@ -181,7 +181,7 @@ def on_login(loginInfo):
         print 'executed query'
         currentUser = cur.fetchone()
 
-        if(currentUser is null):
+        if(currentUser is None):
             print 'this is not a valid login, please try again'
         else:
             
