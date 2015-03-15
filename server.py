@@ -49,9 +49,9 @@ def updateRoster():
         names = []
         #need to check in database here?
         for user_id in users:
-            print users[user_id]['username']
+            print users[user_id]['username'] #user_id is one of the users, and we are grabbing
+                                                #the username for each user
             #if there is no chars in the username
-            #here we should instead check if the resultset is null
             if len(users[user_id]['username'])==0:
                 names.append('Anonymous')
             else:
