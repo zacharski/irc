@@ -15,45 +15,72 @@ app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
 
 def connectToDB():
+  print 'in connectToDB'
 #changed the database name here from irc_db to irc  -- we called it irc.sql right?
-  connectionString = 'dbname=irc user=postgres password=pg host=localhost'
+  connectionString = 'dbname=irc_db user=postgres password=pg host=localhost'
   try:
     return psycopg2.connect(connectionString)
   except:
     print("Can't connect to database - in server.py")
 
-#messages = [{'text':'test', 'name':'testName'}]
-user_select_string = "SELECT * FROM users;"
-#users = 
+messages = [{'text':'test', 'name':'testName'}]
+
+#im trying to pull out all the users into this global variable
+#so that the rest of the session based code will work
+
+
+#USERS IS A DICTIONARY
+users = {} #hopefully this can be changed from update roster
+
+
+
 
 #WHat the actual is this thing doing.
 def updateRoster():
+    print 'in updateRoster'
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    names = []
-    #need to check in database here?
-    for user_id in users:
-        print users[user_id]['username']
-        #if there is no chars in the username
-        if len(users[user_id]['username'])==0:
-            names.append('Anonymous')
-        else:
-            names.append(users[user_id]['username'])
-#This broadcasting names thing happens a lot. seems each time you call identify and login
-    print 'broadcasting names'
-    #I don't know what broadcast does?. changed it to false nothing seemed to change
-    emit('roster', names, broadcast=True)
+    users_select_string = "SELECT users FROM users;"
+    try:
+        cur.execute(users_select_string);
+        print 'executed users query'
+        users = cur.fetchall();
+        print 'fetched all the users'
+
+        names = []
+        #need to check in database here?
+        for user_id in users:
+            print users[user_id]['username']
+            #if there is no chars in the username
+            #here we should instead check if the resultset is null
+            if len(users[user_id]['username'])==0:
+                names.append('Anonymous')
+            else:
+                names.append(users[user_id]['username'])
+        #This broadcasting names thing happens a lot. seems each time you call identify 
+        #and login
+        print 'broadcasting names'
+        #I don't know what broadcast does?. changed it to false nothing seemed to change
+        emit('roster', names, broadcast=True)
+    except:
+        print 'Could not pull user roster from db'
 
 #CONNECT    
 #I think this is where we wire in the database?
+#i believe this is actually where we start connecting to the session -Savannah
+#for right now at least
 @socketio.on('connect', namespace='/chat') #handles the connect event
 def test_connect():
+    print 'in connect'
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     #right now it is using sessions, I think, and it should be checking against the db?
     uuidVar = session['uuid']=uuid.uuid1()#each time a uuid is called, a new number is returned
     sessionUsername = session['username']='starter name'
     #print 'connected'
+    session['uuid']=uuid.uuid1()#each time a uuid is called, a new number is returned
+    session['username']='starter name'
+    print 'connected'
     
     #new user is called when the database runs?    
     users[session['uuid']]={'username':'New User'}
@@ -75,6 +102,7 @@ def test_connect():
 #THIS IS ON LINE 55 IN INDEX.HTML $scope.send - emits message and text
 @socketio.on('message', namespace='/chat')
 def new_message(message):
+    print 'in message'
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     print message
@@ -113,6 +141,7 @@ def new_message(message):
 # $scope.setName2 also emits identify, $scope.name2
 @socketio.on('identify', namespace='/chat')
 def on_identify(message):
+    print 'in identify'
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     print 'identify' + message
@@ -125,12 +154,27 @@ def on_identify(message):
 #around line 85 index.html $scope.processLogin - emits login, $scope.password
 @socketio.on('login', namespace='/chat')
 def on_login(loginInfo):
+    print 'IN LOGIN'
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     #pw is whatever was typed into the password box
     print 'login user'  + loginInfo['username']
     print 'login pass'  + loginInfo['password']
     
+    user_select_string = "SELECT username FROM users WHERE username = %s AND password = %s;"
+
+    try:
+        cur.execute(user_select_string,(loginInfo['username'], loginInfo['password']));
+        print 'executed query'
+        currentUser = cur.fetchone()
+        print 'successfully fetched one value'
+
+        session['username'] = currentUser['username']
+        session['password'] = currentUser['password']
+
+        print 'Logged on as' + session['username'] + 'with pw' + session['password']
+    except:
+        print 'could not execute login query!'
     #users[session['uuid']]={'username':message}
     #updateRoster()
     
