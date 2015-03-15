@@ -79,7 +79,7 @@ if(showhide == "show"){
         $scope.setName2 = function setName2() {
           socket.emit('identify', $scope.name2);
           $scope.name = $scope.name2;
-          $scope.$apply();5
+          $scope.$apply();
         };
 
 //PROCESS LOGIN
@@ -87,9 +87,18 @@ if(showhide == "show"){
           console.log("Trying to log in");
           login('hide');
           //this is what happens when html file says processLogin
-          //can use a dictionary to do stuff
-            //save pass and username in stuff
-          socket.emit('login', $scope.password); //need username here too //only has two parameters
+          //need to create a dictionary here
+         //password and name2- what is an n-g model I dunno but I think we are using it
+          
+            var newInfo = {};
+//            document.writeln($scope.password);
+    //        document.writeln($scope.name2);
+            newInfo['password'] = $scope.password;
+            newInfo['username'] = $scope.name2;
+//            document.writeln("pass is:" + newInfo['password']);
+  //          document.writeln('user is:' + newInfo['username']);
+          
+          socket.emit('login', $scope.newInfo); //need username here too //only has two parameters
         };
       }
     </script>
