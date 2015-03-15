@@ -157,8 +157,8 @@ def on_identify(message):
 @socketio.on('login', namespace='/chat')
 def on_login(loginInfo):
     print 'IN LOGIN'
-  #  conn = connectToDB()
-#     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+     conn = connectToDB()
+     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     #pw is whatever was typed into the password box
    
     #this works if it is a string.
