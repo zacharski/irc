@@ -49,9 +49,9 @@ def updateRoster():
         names = []
         #need to check in database here?
         for user_id in users:
-            print users[user_id]['username']
+            print users[user_id]['username'] #user_id is one of the users, and we are grabbing
+                                                #the username for each user
             #if there is no chars in the username
-            #here we should instead check if the resultset is null
             if len(users[user_id]['username'])==0:
                 names.append('Anonymous')
             else:
@@ -181,24 +181,22 @@ def on_login(loginInfo):
         print 'executed query'
         currentUser = cur.fetchone()
 
-        if(currentUser is NULL):
+        if(currentUser is None):
             print 'this is not a valid login, please try again'
         else:
-#            continue
-            print "hoopadoop"
+            
+            print 'successfully fetched one value'
+        
+            print 'sessionuser:' + session['username']
+            #print 'sessionpass:' + session['password']        
+        
+            print 'currentUser:' + str(currentUser)
+            #print 'sessionpass:' + session['password']        
+        
+            session['username'] = currentUser['username']
+            #session['password'] = currentUser['password']
 
-        print 'successfully fetched one value'
-        
-        print 'sessionuser:' + session['username']
-        #print 'sessionpass:' + session['password']        
-        
-        print 'currentUser:' + str(currentUser)
-        #print 'sessionpass:' + session['password']        
-        
-        session['username'] = currentUser['username']
-        #session['password'] = currentUser['password']
-
-        print 'Logged on as' + session['username'] #+ 'with pw' + session['password']
+            print 'Logged on as' + session['username'] #+ 'with pw' + session['password']
     except:
         print 'could not execute login query!'
         traceback.print_exc()
