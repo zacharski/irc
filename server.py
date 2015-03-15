@@ -112,8 +112,8 @@ def new_message(message):
     print message
     
     messageToGoInDB = message
-    originalPosterID = '7'
-    insertStatement = "INSERT INTO messages (message_id, original_poster_id, message_content) VALUES ('DEFAULT', %s, %s)"
+    originalPosterID = 78
+    insertStatement = "INSERT INTO messages (message_id, original_poster_id, message_content) VALUES ('DEFAULT', %d, %s)"
     
     try: 
         cur.execute(insertStatement, ('DEFAULT', originalPosterID, messageToGoInDB));
