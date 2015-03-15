@@ -183,7 +183,7 @@ def on_login(loginInfo):
         
         session['username'] = currentUser['username']
 
-        print 'Logged on as' + session['username'] + 'with pw' + session['password']
+        print 'Logged on as' + session['username']
     except:
         print 'could not execute login query!'
     #users[session['uuid']]={'username':message}
