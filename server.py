@@ -175,6 +175,13 @@ def on_login(loginInfo):
         cur.execute(user_select_string,(usernameVar, passwordVar));
         print 'executed query'
         currentUser = cur.fetchone()
+
+        if(currentUser==null):
+            print 'this is not a valid login, please try again'
+        else:
+            continue
+
+
         print 'successfully fetched one value'
         
         print 'sessionuser:' + session['username']
@@ -183,7 +190,7 @@ def on_login(loginInfo):
         
         session['username'] = currentUser['username']
 
-        print 'Logged on as' + session['username'] + 'with pw' + session['password']
+        print 'Logged on as' + session['username']
     except:
         print 'could not execute login query!'
     #users[session['uuid']]={'username':message}
