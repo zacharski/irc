@@ -48,6 +48,11 @@ def updateRoster():
 
         names = []
         #need to check in database here?
+        for bob_guy in users:
+            print bob_guy 
+        
+        #its getting a thing that looks like this: ['(1,SpiderBall,sb)'] and more stuff like it
+         
         for user_id in users:
             print users[user_id]['username'] #user_id is one of the users, and we are grabbing
                                                 #the username for each user
