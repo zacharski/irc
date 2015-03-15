@@ -110,13 +110,13 @@ def new_message(message):
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     print message
-    
+   
     messageToGoInDB = message
-    originalPosterID = '7'
-    insertStatement = "INSERT INTO messages (message_id, original_poster_id, message_content) VALUES ('DEFAULT', %s, %s)"
+    originalPosterID = 78
+    insertStatement = "INSERT INTO messages (original_poster_id, message_content) VALUES (%s, %s)"
     
     try: 
-        cur.execute(insertStatement, ('DEFAULT', originalPosterID, messageToGoInDB));
+        cur.execute(insertStatement, (originalPosterID, messageToGoInDB));
     except:
         print "there was an error with the insert"
         traceback.print_exc()
