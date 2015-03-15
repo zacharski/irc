@@ -114,7 +114,8 @@ if(showhide == "show"){
 <center><input type="text"  ng-model="name2" ng-change="setName2()" placeholder="Username" size="14" /></center>
 <center>Password:</center>
 <center><input  ng-model="password" type="password" size="14" /></center>
-<center><input type="submit" class="span1 btn btn-primary" value="Send" ng-disabled="!password"></center>
+<!--- this value=Login used to say Send. I thought that was confusing -->
+<center><input type="submit" class="span1 btn btn-primary" value="Login" ng-disabled="!password"></center>
 </form>
 <br />
 
@@ -153,7 +154,7 @@ if(showhide == "show"){
             </thead>
             <tbody>
               <tr ng-repeat="msg in messages">
-                <td class="span2" ng-bind="msg.name"></td>
+                <td class="span2" ng-bind="msg.username"></td>
                 <td class="span7" ng-bind="msg.text"></td>
               </tr>
             </tbody>
