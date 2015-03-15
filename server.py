@@ -3,6 +3,7 @@
 
 import psycopg2
 import psycopg2.extras
+import traceback
 
 import os
 import uuid
@@ -15,12 +16,13 @@ app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
 
 def connectToDB():
-  print 'in connectToDB'
+  #print 'in connectToDB'
   connectionString = 'dbname=irc_db user=postgres password=pg host=localhost'
   try:
     return psycopg2.connect(connectionString)
   except:
     print("Can't connect to database - in server.py")
+    traceback.print_exc()
 
 messages = [{'text':'test', 'name':'testName'}]
 
@@ -61,6 +63,7 @@ def updateRoster():
         emit('roster', names, broadcast=True)
     except:
         print 'Could not pull user roster from db'
+        traceback.print_exc()
 
 #CONNECT    
 #I think this is where we wire in the database?
@@ -71,8 +74,6 @@ def test_connect():
     print 'in connect'
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    
-    
     
     #right now it is using sessions, I think, and it should be checking against the db?
     uuidVar = session['uuid']=uuid.uuid1()#each time a uuid is called, a new number is returned
@@ -88,16 +89,17 @@ def test_connect():
     
     #updateRoster is called here. duh. it goes to...
     updateRoster()
-
+    
     for message in messages:
         emit('message', message)
     
-    try:
+ #   try:
         #this will be the query 
-        print("This will be a query")
-        cur.execute
-    except:
-        print ("I didn't get to do the query.")
+   #     print("This will be a query")
+    #    cur.execute#
+#    except:
+     #   print ("I didn't get to do the query.")
+       # traceback.print_exc()
     
 
 #MESSAGE
@@ -108,33 +110,32 @@ def new_message(message):
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     print message
+    
+    messageToGoInDB = message
+    originalPosterID = '7'
+    insertStatement = "INSERT INTO messages (message_id, original_poster_id, message_content) VALUES ('DEFAULT', %s, %s)"
+    
+    try: 
+        cur.execute(insertStatement, ('DEFAULT', originalPosterID, messageToGoInDB));
+    except:
+        print "there was an error with the insert"
+        traceback.print_exc()
+        
+    conn.commit()
     #tmp = {'text':message, 'name':'testName'}
     #user is not a real thing yet, its also just an iterator in python. 
     #users is supposed to be the results from the database.
-    if user in users:
-        tmp = {'text':message, 'name':users[session['uuid']]['username']}
     
-    #we need to store tmp in the database?
-    messageID = ""
-    originalPoster = ""
-    messageContent = message #maybe this stuff needs to be the things that are stored in tmp right now?
-    messageID2 = {someSortOfDefaultShitOrSomething}
-    originalPoster2 = {'name':sessionUsername}
-    messageContent2 = {'text':message}
+    #if user in users:
+    #    tmp = {'text':message, 'name':users[session['uuid']]['username']}
     
+    tmp = "Appended this"
     
-    messageQuery = "INSERT INTO messages (message_id, original_poster_id, message_content) VALUES (%s, %s);"
-    try:
-        cur.execute(messageQuery, (messageID, originalPoster, messageContent) );
-    except:
-        print "Error inserting messages into the db!"
-    conn.commit()
-    newTmp = {messageID, originalPoster, messageContent}
-    messages.append(newTmp)
+    #newTmp = {messageID, originalPoster, messageContent}
+    messages.append(tmp)
     
     #this is what was there originally
     #messages.append(tmp)
-    
     
     emit('message', tmp, broadcast=True)
 
@@ -149,6 +150,10 @@ def on_identify(message):
     print 'identify' + message
     #the message here is where we need to connect to check against the database??
     #message is the username here.
+    
+    #message is the real time variable that is displaying in the server console window and it is being displayed as 
+    #the user types things into the username box.
+    #we might need to get the username from here and the password from here and get the thing
     users[session['uuid']]={'username':message}
     updateRoster()
     
@@ -175,17 +180,18 @@ def on_login(loginInfo):
         print 'successfully fetched one value'
         
         print 'sessionuser:' + session['username']
-        print 'sessionpass:' + session['password']        
+        #print 'sessionpass:' + session['password']        
         
         print 'currentUser:' + str(currentUser)
-        print 'sessionpass:' + session['password']        
+        #print 'sessionpass:' + session['password']        
         
         session['username'] = currentUser['username']
-        session['password'] = currentUser['password']
+        #session['password'] = currentUser['password']
 
-        print 'Logged on as' + session['username'] + 'with pw' + session['password']
+        print 'Logged on as' + session['username'] #+ 'with pw' + session['password']
     except:
         print 'could not execute login query!'
+        traceback.print_exc()
     #users[session['uuid']]={'username':message}
     #updateRoster()
     
