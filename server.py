@@ -49,7 +49,9 @@ def updateRoster():
         names = []
         #need to check in database here?
         for bob_guy in users:
-            print bob_guy 
+            print bob_guy
+            bobstr = str(bob_guy)
+            print bobstr
         
         #its getting a thing that looks like this: ['(1,SpiderBall,sb)'] and more stuff like it
          
@@ -80,7 +82,6 @@ def test_connect():
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     
-    #right now it is using sessions, I think, and it should be checking against the db?
     uuidVar = session['uuid']=uuid.uuid1()#each time a uuid is called, a new number is returned
     
     sessionUsername = session['username']='starter name'
@@ -89,14 +90,14 @@ def test_connect():
     session['username']='starter name'
     print 'connected'
     
-    #new user is called when the database runs?    
+    #this means that it goes to the users list thing and gets the session id (this instance of the chat and makes the username field = new user
     users[session['uuid']]={'username':'New User'}
     
     #updateRoster is called here. duh. it goes to...
     updateRoster()
     
-    for message in messages:
-        emit('message', message)
+    for item in messages:
+        emit('message', item)
     
  #   try:
         #this will be the query 
@@ -127,20 +128,19 @@ def new_message(message):
         traceback.print_exc()
         
     conn.commit()
-    #tmp = {'text':message, 'name':'testName'}
+    
+    #take what is in the database, take from the users column and then make it into a python dict called users
+    tmp = {'text':message, 'username':'testName'}
     #user is not a real thing yet, its also just an iterator in python. 
     #users is supposed to be the results from the database.
     
-    #if user in users:
-    #    tmp = {'text':message, 'name':users[session['uuid']]['username']}
+    thisSessionNum = session['uuid']
     
-    tmp = "Appended this"
-    
-    #newTmp = {messageID, originalPoster, messageContent}
+    if user in users:
+        tmp = {'text':message, 'username':users[thisSessionNum]['username']}
+   
+    #messages is a list of python dictionaries that look like {messages,users} 
     messages.append(tmp)
-    
-    #this is what was there originally
-    #messages.append(tmp)
     
     emit('message', tmp, broadcast=True)
 
@@ -148,18 +148,17 @@ def new_message(message):
 #LINE 76ish in index.html? $scope.setName - emits identify scope.name
 # $scope.setName2 also emits identify, $scope.name2
 @socketio.on('identify', namespace='/chat')
-def on_identify(message):
+def on_identify(userTypedLoginInfo):
     print 'in identify'
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    print 'identify' + message
+    print 'identify' + userTypedLoginInfo
     #the message here is where we need to connect to check against the database??
-    #message is the username here.
     
-    #message is the real time variable that is displaying in the server console window and it is being displayed as 
+    #userTypedLogininfo is the real time variable that is displaying in the server console window and it is being displayed as 
     #the user types things into the username box.
     #we might need to get the username from here and the password from here and get the thing
-    users[session['uuid']]={'username':message}
+    users[session['uuid']]={'username':userTypedLoginInfo}
     updateRoster()
     
 #LOGIN
@@ -201,7 +200,7 @@ def on_login(loginInfo):
             session['username'] = currentUser['username']
             #session['password'] = currentUser['password']
 
-            print 'Logged on as' + session['username'] #+ 'with pw' + session['password']
+            print 'Logged on as:' + session['username'] #+ 'with pw' + session['password']
     except:
         print 'could not execute login query!'
         traceback.print_exc()
