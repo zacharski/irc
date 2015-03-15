@@ -157,27 +157,29 @@ def on_identify(message):
 @socketio.on('login', namespace='/chat')
 def on_login(loginInfo):
     print 'IN LOGIN'
-  #  conn = connectToDB()
-#     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    #pw is whatever was typed into the password box
-   
-    #this works if it is a string.
+    conn = connectToDB()
+    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    
     usernameVar = loginInfo['username']
     passwordVar = loginInfo['password']
     #THIS DOESN"T WORK YET
-    print usernameVar + 'and' + passwordVar
-    print 'login user' 
-    print loginInfo['username']
-    print 'login pass'  + loginInfo['password']
+    print 'user:' + loginInfo['username']
+    print 'pass:'  + loginInfo['password']
     
     user_select_string = "SELECT username FROM users WHERE username = %s AND password = %s;"
 
     try:
-        cur.execute(user_select_string,(loginInfo['username'], loginInfo['password']));
+        cur.execute(user_select_string,(usernameVar, passwordVar));
         print 'executed query'
         currentUser = cur.fetchone()
         print 'successfully fetched one value'
-
+        
+        print 'sessionuser:' + session['username']
+        print 'sessionpass:' + session['password']        
+        
+        print 'currentUser:' + str(currentUser)
+        print 'sessionpass:' + session['password']        
+        
         session['username'] = currentUser['username']
         session['password'] = currentUser['password']
 
