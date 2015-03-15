@@ -72,6 +72,8 @@ def test_connect():
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     
+    
+    
     #right now it is using sessions, I think, and it should be checking against the db?
     uuidVar = session['uuid']=uuid.uuid1()#each time a uuid is called, a new number is returned
     
@@ -155,10 +157,17 @@ def on_identify(message):
 @socketio.on('login', namespace='/chat')
 def on_login(loginInfo):
     print 'IN LOGIN'
-    conn = connectToDB()
-    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+  #  conn = connectToDB()
+#     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     #pw is whatever was typed into the password box
-    print 'login user'  + loginInfo['username']
+   
+    #this works if it is a string.
+    usernameVar = loginInfo['username']
+    passwordVar = loginInfo['password']
+    #THIS DOESN"T WORK YET
+    print usernameVar + 'and' + passwordVar
+    print 'login user' 
+    print loginInfo['username']
     print 'login pass'  + loginInfo['password']
     
     user_select_string = "SELECT username FROM users WHERE username = %s AND password = %s;"
