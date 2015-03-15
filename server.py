@@ -16,7 +16,6 @@ socketio = SocketIO(app)
 
 def connectToDB():
   print 'in connectToDB'
-#changed the database name here from irc_db to irc  -- we called it irc.sql right?
   connectionString = 'dbname=irc_db user=postgres password=pg host=localhost'
   try:
     return psycopg2.connect(connectionString)
@@ -31,8 +30,6 @@ messages = [{'text':'test', 'name':'testName'}]
 
 #USERS IS A DICTIONARY
 users = {} #hopefully this can be changed from update roster
-
-
 
 
 #WHat the actual is this thing doing.
@@ -74,8 +71,10 @@ def test_connect():
     print 'in connect'
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    
     #right now it is using sessions, I think, and it should be checking against the db?
     uuidVar = session['uuid']=uuid.uuid1()#each time a uuid is called, a new number is returned
+    
     sessionUsername = session['username']='starter name'
     #print 'connected'
     session['uuid']=uuid.uuid1()#each time a uuid is called, a new number is returned
@@ -94,6 +93,7 @@ def test_connect():
     try:
         #this will be the query 
         print("This will be a query")
+        cur.execute
     except:
         print ("I didn't get to do the query.")
     
