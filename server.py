@@ -16,7 +16,6 @@ socketio = SocketIO(app)
 
 def connectToDB():
   print 'in connectToDB'
-#changed the database name here from irc_db to irc  -- we called it irc.sql right?
   connectionString = 'dbname=irc_db user=postgres password=pg host=localhost'
   try:
     return psycopg2.connect(connectionString)
@@ -33,8 +32,6 @@ messages = [{'text':'test', 'name':'testName'}]
 users = {} #hopefully this can be changed from update roster
 
 
-
-
 #WHat the actual is this thing doing.
 def updateRoster():
     print 'in updateRoster'
@@ -42,9 +39,9 @@ def updateRoster():
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     users_select_string = "SELECT users FROM users;"
     try:
-        cur.execute(users_select_string);
+        cur.execute(users_select_string)
         print 'executed users query'
-        users = cur.fetchall();
+        users = cur.fetchall()
         print 'fetched all the users'
 
         names = []
@@ -74,7 +71,12 @@ def test_connect():
     print 'in connect'
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    
     #right now it is using sessions, I think, and it should be checking against the db?
+    uuidVar = session['uuid']=uuid.uuid1()#each time a uuid is called, a new number is returned
+    
+    sessionUsername = session['username']='starter name'
+    #print 'connected'
     session['uuid']=uuid.uuid1()#each time a uuid is called, a new number is returned
     session['username']='starter name'
     print 'connected'
@@ -91,6 +93,7 @@ def test_connect():
     try:
         #this will be the query 
         print("This will be a query")
+        cur.execute
     except:
         print ("I didn't get to do the query.")
     
@@ -102,9 +105,35 @@ def new_message(message):
     print 'in message'
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    print message
     #tmp = {'text':message, 'name':'testName'}
-    tmp = {'text':message, 'name':users[session['uuid']]['username']}
-    messages.append(tmp)
+    #user is not a real thing yet, its also just an iterator in python. 
+    #users is supposed to be the results from the database.
+    if user in users:
+        tmp = {'text':message, 'name':users[session['uuid']]['username']}
+    
+    #we need to store tmp in the database?
+    messageID = ""
+    originalPoster = ""
+    messageContent = message #maybe this stuff needs to be the things that are stored in tmp right now?
+    messageID2 = {someSortOfDefaultShitOrSomething}
+    originalPoster2 = {'name':sessionUsername}
+    messageContent2 = {'text':message}
+    
+    
+    messageQuery = "INSERT INTO messages (message_id, original_poster_id, message_content) VALUES (%s, %s);"
+    try:
+        cur.execute(messageQuery, (messageID, originalPoster, messageContent) );
+    except:
+        print "Error inserting messages into the db!"
+    conn.commit()
+    newTmp = {messageID, originalPoster, messageContent}
+    messages.append(newTmp)
+    
+    #this is what was there originally
+    #messages.append(tmp)
+    
+    
     emit('message', tmp, broadcast=True)
 
 #IDENTIFY    
