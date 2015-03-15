@@ -54,15 +54,21 @@ def updateRoster():
             print bobstr
         
         #its getting a thing that looks like this: ['(1,SpiderBall,sb)'] and more stuff like it
+        
+        print users[0]
          
-        for user_id in users:
-            print users[user_id]['username'] #user_id is one of the users, and we are grabbing
+        #for user_id in users:
+        #    print users[user_id]['username'] #user_id is one of the users, and we are grabbing
                                                 #the username for each user
+        
             #if there is no chars in the username
-            if len(users[user_id]['username'])==0:
-                names.append('Anonymous')
-            else:
-                names.append(users[user_id]['username'])
+        #    if len(users[user_id]['username'])==0:
+        #        names.append('Anonymous')
+        #    else:
+        #        names.append(users[user_id]['username'])
+        
+        print names
+        
         #This broadcasting names thing happens a lot. seems each time you call identify 
         #and login
         print 'broadcasting names'
@@ -136,8 +142,10 @@ def new_message(message):
     
     thisSessionNum = session['uuid']
     
+    user = users[thisSessionNum]['username']
+    print 'user is :' + user
     if user in users:
-        tmp = {'text':message, 'username':users[thisSessionNum]['username']}
+        tmp = {'text':message, 'username':user}
    
     #messages is a list of python dictionaries that look like {messages,users} 
     messages.append(tmp)
