@@ -58,7 +58,7 @@ def updateRoster():
         
         for item in names:
             print 'meow'
-            print 'a thing in names is:' + item
+            print 'a thing in names is:' + item[0]
         #for user_id in users:
         #print users[user_id]['username'] #user_id is one of the users, and we are grabbing
                                                 #the username for each user
