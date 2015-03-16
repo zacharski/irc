@@ -53,10 +53,10 @@ def updateRoster():
             print bob_guy
         
         #its getting a thing that looks like this: ['(1,SpiderBall,sb)'] and more stuff like it
-        thingToPutInNames = users[0]
+        thingToPutInNames = users[0]#this only puts SpiderBall in names
         print thingToPutInNames
         
-        for item in names[1]:
+        for item[1] in names:
             print 'meow'
             print 'a thing in names is:' + item[0]
         #for user_id in users:
