@@ -51,12 +51,13 @@ def updateRoster():
         #need to check in database here?
         for bob_guy in users:
             print bob_guy
+            print 'in bob_guy'
         
         #its getting a thing that looks like this: ['(1,SpiderBall,sb)'] and more stuff like it
         thingToPutInNames = users[0]#this only puts SpiderBall in names
         print thingToPutInNames
         
-        for item[1] in names:
+        for item in names[][1]:
             print 'meow'
             print 'a thing in names is:' + item[0]
         #for user_id in users:
