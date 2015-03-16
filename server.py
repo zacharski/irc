@@ -155,6 +155,16 @@ def on_identify(userTypedLoginInfo):
     users[session['uuid']]={'username':userTypedLoginInfo}
     updateRoster()
     
+  
+@socketio.on('search')
+def on_search(searchValue):
+    conn = connectToDB()
+    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    print 'SEARCH'
+    search_select = "SELECT * FROM messages WHERE content LIKE %%s%;"
+    cur.execute(search_select, (searchValue,))
+    
+
 #LOGIN
 #around line 85 index.html $scope.processLogin - emits login, $scope.password
 @socketio.on('login', namespace='/chat')
@@ -247,13 +257,7 @@ def on_disconnect():
         del users[session['uuid']]
         updateRoster()
 
-@socketio.on('search')
-def on_search(searchValue):
-    conn = connectToDB()
-    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    print 'SEARCH'
-    search_select = "SELECT * FROM messages WHERE content LIKE %%s%;"
-    cur.execute(search_select, (searchValue,))
+
 
 
 @app.route('/')
