@@ -35,3 +35,7 @@ Welcome to your IRC project on Cloud9 IDE!
 ### You must host your code on github
 
 
+we still need to :
+    cake is great!
+    - do search stuff
+    - make it fail gracefully when user is not in the thing
