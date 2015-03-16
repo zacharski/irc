@@ -180,7 +180,7 @@ def on_login(loginInfo):
     
     for message in previousMessages:
         messageStr = str(message['message_content'])
-        print 'a previous message was:' + messageStr
+        #print 'a previous message was:' + messageStr
         idStr = str(message['original_poster_id'])
         #print 'the users id was: ' + idStr
     
@@ -197,33 +197,23 @@ def on_login(loginInfo):
             #print 'the id is:' + idStr
             theUserMatchName = user['username']
             #print 'the username that hopefully matches is' + theUserMatchName
-        print 'previous loop still hopefully'
         temp = {'text':messageStr, 'username':theUserMatchName}   
         oldMessages.append(temp)
-        #oldMessages = {'text':messageStr, 'username':theUserMatchName}    
-        
+        #oldMessages = [{'text':messageStr, 'username':theUserMatchName}]    
+    
+    count = 0   
     for item in oldMessages:    
-        #print str(item)
-        usernameName = oldMessages['username']
-        messageFromUsername = oldMessages['text']
-        print usernameName 
-        print messageFromUsername
+        if count >= len(oldMessages):
+            thing = 'nope'
+        else :
+            usernameName = oldMessages[count]['username']
+            messageFromUsername = oldMessages[count]['text']
+            print messageFromUsername
+            print 'from:' + usernameName 
+            count = count + 1
     
-    #get posterId from messages
-#    messagesPosterIdQuery = "SELECT original_poster_id FROM messages;"
-#    try:
-#        cur.execute(messagesPosterIdQuery)
-#    except:
-#        print("couldn't get posterID from messages!")
-#    
-#    listOfPosterIDsFromMessages = cur.fetchall()
-#
-#    for messagesUserId in listOfPosterIDsFromMessages:
-#        userIdStringFromInt = str(messagesUserId[0])
-        #print 'the user id is:' + userIdStringFromInt
     
-        #oldMessages['username'] = 
-    
+     
     #what why is this commented out. zacharski did that and I don't know. 
     #users[session['uuid']]={'username':message}
     #updateRoster()
