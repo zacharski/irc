@@ -47,24 +47,30 @@ def updateRoster():
         print 'fetched all the users'
 
         #im going to try setting names equal to users
-        names = users
+        names = []
         #need to check in database here?
         for bob_guy in users:
-            print bob_guy
+            print bob_guy[0][3:-4]
             print 'in bob_guy'
         
+        
+        for user in users:
+            print 'printing names'
+            print user[0][3:-4]
+            names.append(user[0][3:-4])
+        
+        
+        
         #its getting a thing that looks like this: ['(1,SpiderBall,sb)'] and more stuff like it
-        thingToPutInNames = users[0]#this only puts SpiderBall in names
+        thingToPutInNames = users#this only puts SpiderBall in names
         print thingToPutInNames
         
-        count = 0
-        for item in names[count][1]:
-            print 'meow'
-            print 'a thing in names is:' + item[0]
-            if count >= len(names):
-                break
-            else:
-                count += 1
+        
+        # count = 0
+        # for item in names:
+        #     print 'meow'
+        #     print 'a thing in names is:' + item[0][3:-4]
+
         #for user_id in users:
         #print users[user_id]['username'] #user_id is one of the users, and we are grabbing
                                                 #the username for each user
