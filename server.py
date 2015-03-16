@@ -57,9 +57,11 @@ def updateRoster():
         thingToPutInNames = users[0]#this only puts SpiderBall in names
         print thingToPutInNames
         
-        for item in names[][1]:
+        count = 0
+        for item in names[count][1]:
             print 'meow'
             print 'a thing in names is:' + item[0]
+            count += 1
         #for user_id in users:
         #print users[user_id]['username'] #user_id is one of the users, and we are grabbing
                                                 #the username for each user
