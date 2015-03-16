@@ -26,107 +26,46 @@ def connectToDB():
 
 messages = [{'text':'test', 'name':'testName'}]
 
-#im trying to pull out all the users into this global variable
-#so that the rest of the session based code will work
-
 
 #USERS IS A DICTIONARY
-users = {} #hopefully this can be changed from update roster
+users = {} 
 
 
 #WHat the actual is this thing doing.
 def updateRoster():
-    print 'IN UPDATEROSTER'
-    conn = connectToDB()
-    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    users_select_string = "SELECT users FROM users;"
-    try:
-        cur.execute(users_select_string)
-        print 'executed users query'
-        users = cur.fetchall()
-        print 'fetched all the users'
+    names = []
+    for user_id in  users:
+        print users[user_id]['username']
+        if len(users[user_id]['username'])==0:
+            names.append('Anonymous')
+        else:
+            names.append(users[user_id]['username'])
+    print 'broadcasting names'
+    emit('roster', names, broadcast=True)
 
-        #im going to try setting names equal to users
-        names = []
-        #need to check in database here?
-        for bob_guy in users:
-            print bob_guy[0][3:-4]
-            print 'in bob_guy'
-        
-        
-        for user in users:
-            print 'printing names'
-            print user[0][3:-4]
-            names.append(user[0][3:-4])
-        
-        
-        
-        #its getting a thing that looks like this: ['(1,SpiderBall,sb)'] and more stuff like it
-        thingToPutInNames = users#this only puts SpiderBall in names
-        print thingToPutInNames
-        
-        
-        # count = 0
-        # for item in names:
-        #     print 'meow'
-        #     print 'a thing in names is:' + item[0][3:-4]
-
-        #for user_id in users:
-        #print users[user_id]['username'] #user_id is one of the users, and we are grabbing
-                                                #the username for each user
-        
-            #if there is no chars in the username
-        #    if len(users[user_id]['username'])==0:
-        #        names.append('Anonymous')
-        #    else:
-        #        names.append(users[user_id]['username'])
-        
-        #This broadcasting names thing happens a lot. seems each time you call identify 
-        #and login
-        print 'broadcasting names'
-        #I don't know what broadcast does?. changed it to false nothing seemed to change
-        emit('roster', names, broadcast=True)
-    except:
-        print 'Could not pull user roster from db'
-        traceback.print_exc()
 
 #CONNECT    
-#I think this is where we wire in the database?
-#i believe this is actually where we start connecting to the session -Savannah
-#for right now at least
 @socketio.on('connect', namespace='/chat') #handles the connect event
 def test_connect():
     print 'IN CONNECT'
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     
-    uuidVar = session['uuid']=uuid.uuid1()#each time a uuid is called, a new number is returned
-    
-    sessionUsername = session['username']='starter name'
-    #print 'connected'
-    session['uuid']=uuid.uuid1()#each time a uuid is called, a new number is returned
+    session['uuid']=uuid.uuid1()# each time a uuid is called,
+                                # a new number is returned
+
     session['username']='starter name'
     print 'connected'
     
-    #this means that it goes to the users list thing and gets the session id (this instance of the chat
-    #and makes the username field = new user
+    #this means that it goes to the users list thing and gets the session id 
+    #this instance of the chat and makes the username field = new user
     
     users[session['uuid']]={'username':'New User'}
     
-    #updateRoster is called here. duh. it goes to...
     updateRoster()
     
     for item in messages:
         emit('message', item)
-    
- #   try:
-        #this will be the query 
-   #     print("This will be a query")
-    #    cur.execute#
-#    except:
-     #   print ("I didn't get to do the query.")
-       # traceback.print_exc()
-    
 
 #MESSAGE
 #THIS IS ON LINE 55 IN INDEX.HTML $scope.send - emits message and text
@@ -150,7 +89,7 @@ def new_message(message):
     conn.commit()
     
     #take what is in the database, take from the users column and then make it into a python dict called users
-    tmp = {'text':message, 'username':'testNameYup'}
+    tmp = {'text':message, 'username':session['username']}
     #user is not a real thing yet, its also just an iterator in python. 
     #users is supposed to be the results from the database.
     
@@ -183,7 +122,7 @@ def on_identify(userTypedLoginInfo):
     users[session['uuid']]={'username':userTypedLoginInfo}
     updateRoster()
     
-#LOGI://www.youtube.com/nsprandom% N
+#LOGIN
 #around line 85 index.html $scope.processLogin - emits login, $scope.password
 @socketio.on('login', namespace='/chat')
 def on_login(loginInfo):
@@ -222,7 +161,7 @@ def on_login(loginInfo):
             session['username'] = currentUser['username']
             #session['password'] = currentUser['password']
 
-            print 'Logged on as:' + session['username'] #+ 'with pw' + session['password']
+            print 'Logged on as:' + session['username'] 
     except:
         print 'could not execute login query!'
         traceback.print_exc()
