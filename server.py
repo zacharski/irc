@@ -41,6 +41,7 @@ def updateRoster():
         else:
             names.append(users[user_id]['username'])
     print 'broadcasting names'
+    traceback.print_exc()
     emit('roster', names, broadcast=True)
 
 
