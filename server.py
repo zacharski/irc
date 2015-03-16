@@ -36,7 +36,7 @@ users = {} #hopefully this can be changed from update roster
 
 #WHat the actual is this thing doing.
 def updateRoster():
-    print 'in updateRoster'
+    print 'IN UPDATEROSTER'
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     users_select_string = "SELECT users FROM users;"
@@ -48,14 +48,26 @@ def updateRoster():
 
         names = []
         #need to check in database here?
-        for user_id in users:
-            print users[user_id]['username'] #user_id is one of the users, and we are grabbing
+        for bob_guy in users:
+            print bob_guy
+        
+        #its getting a thing that looks like this: ['(1,SpiderBall,sb)'] and more stuff like it
+        thingToPutInNames = users[0]
+        print thingToPutInNames
+        
+        for item in names:
+            print 'meow'
+            print 'a thing in names is:' + item
+        #for user_id in users:
+        #print users[user_id]['username'] #user_id is one of the users, and we are grabbing
                                                 #the username for each user
+        
             #if there is no chars in the username
-            if len(users[user_id]['username'])==0:
-                names.append('Anonymous')
-            else:
-                names.append(users[user_id]['username'])
+        #    if len(users[user_id]['username'])==0:
+        #        names.append('Anonymous')
+        #    else:
+        #        names.append(users[user_id]['username'])
+        
         #This broadcasting names thing happens a lot. seems each time you call identify 
         #and login
         print 'broadcasting names'
@@ -71,11 +83,10 @@ def updateRoster():
 #for right now at least
 @socketio.on('connect', namespace='/chat') #handles the connect event
 def test_connect():
-    print 'in connect'
+    print 'IN CONNECT'
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     
-    #right now it is using sessions, I think, and it should be checking against the db?
     uuidVar = session['uuid']=uuid.uuid1()#each time a uuid is called, a new number is returned
     
     sessionUsername = session['username']='starter name'
@@ -84,14 +95,14 @@ def test_connect():
     session['username']='starter name'
     print 'connected'
     
-    #new user is called when the database runs?    
+    #this means that it goes to the users list thing and gets the session id (this instance of the chat and makes the username field = new user
     users[session['uuid']]={'username':'New User'}
     
     #updateRoster is called here. duh. it goes to...
     updateRoster()
     
-    for message in messages:
-        emit('message', message)
+    for item in messages:
+        emit('message', item)
     
  #   try:
         #this will be the query 
@@ -106,10 +117,10 @@ def test_connect():
 #THIS IS ON LINE 55 IN INDEX.HTML $scope.send - emits message and text
 @socketio.on('message', namespace='/chat')
 def new_message(message):
-    print 'in message'
+    print 'IN MESSAGE'
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    print message
+    print 'the message typed was:' + message
    
     messageToGoInDB = message
     originalPosterID = 78
@@ -122,20 +133,21 @@ def new_message(message):
         traceback.print_exc()
         
     conn.commit()
-    #tmp = {'text':message, 'name':'testName'}
+    
+    #take what is in the database, take from the users column and then make it into a python dict called users
+    tmp = {'text':message, 'username':'testNameYup'}
     #user is not a real thing yet, its also just an iterator in python. 
     #users is supposed to be the results from the database.
     
-    #if user in users:
-    #    tmp = {'text':message, 'name':users[session['uuid']]['username']}
+    thisSessionNum = session['uuid']
     
-    tmp = "Appended this"
-    
-    #newTmp = {messageID, originalPoster, messageContent}
+    user = users[thisSessionNum]['username']
+    print 'user is :' + user
+    if user in users:
+        tmp = {'text':message, 'username':user}
+   
+    #messages is a list of python dictionaries that look like {messages,users} 
     messages.append(tmp)
-    
-    #this is what was there originally
-    #messages.append(tmp)
     
     emit('message', tmp, broadcast=True)
 
@@ -143,18 +155,17 @@ def new_message(message):
 #LINE 76ish in index.html? $scope.setName - emits identify scope.name
 # $scope.setName2 also emits identify, $scope.name2
 @socketio.on('identify', namespace='/chat')
-def on_identify(message):
-    print 'in identify'
+def on_identify(userTypedLoginInfo):
+    print 'IN IDENTIFY'
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    print 'identify' + message
+    print 'identify' + userTypedLoginInfo
     #the message here is where we need to connect to check against the database??
-    #message is the username here.
     
-    #message is the real time variable that is displaying in the server console window and it is being displayed as 
+    #userTypedLogininfo is the real time variable that is displaying in the server console window and it is being displayed as 
     #the user types things into the username box.
     #we might need to get the username from here and the password from here and get the thing
-    users[session['uuid']]={'username':message}
+    users[session['uuid']]={'username':userTypedLoginInfo}
     updateRoster()
     
 #LOGIN
@@ -196,7 +207,7 @@ def on_login(loginInfo):
             session['username'] = currentUser['username']
             #session['password'] = currentUser['password']
 
-            print 'Logged on as' + session['username'] #+ 'with pw' + session['password']
+            print 'Logged on as:' + session['username'] #+ 'with pw' + session['password']
     except:
         print 'could not execute login query!'
         traceback.print_exc()
@@ -206,7 +217,7 @@ def on_login(loginInfo):
 #DISCONNECT
 @socketio.on('disconnect', namespace='/chat')
 def on_disconnect():
-    print 'disconnect'
+    print 'DISCONNECT'
     #disconnect happens when you close the thing!
     if session['uuid'] in users:
         del users[session['uuid']]
