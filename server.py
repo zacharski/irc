@@ -46,7 +46,8 @@ def updateRoster():
         users = cur.fetchall()
         print 'fetched all the users'
 
-        names = []
+        #im going to try setting names equal to users
+        names = users
         #need to check in database here?
         for bob_guy in users:
             print bob_guy
@@ -95,7 +96,9 @@ def test_connect():
     session['username']='starter name'
     print 'connected'
     
-    #this means that it goes to the users list thing and gets the session id (this instance of the chat and makes the username field = new user
+    #this means that it goes to the users list thing and gets the session id (this instance of the chat
+    #and makes the username field = new user
+    
     users[session['uuid']]={'username':'New User'}
     
     #updateRoster is called here. duh. it goes to...
@@ -168,7 +171,7 @@ def on_identify(userTypedLoginInfo):
     users[session['uuid']]={'username':userTypedLoginInfo}
     updateRoster()
     
-#LOGIN
+#LOGI://www.youtube.com/nsprandom% N
 #around line 85 index.html $scope.processLogin - emits login, $scope.password
 @socketio.on('login', namespace='/chat')
 def on_login(loginInfo):
