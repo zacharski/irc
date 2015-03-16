@@ -47,7 +47,7 @@ def updateRoster():
         print 'fetched all the users'
 
         #im going to try setting names equal to users
-        names = users
+        names = users[1]
         #need to check in database here?
         for bob_guy in users:
             print bob_guy
