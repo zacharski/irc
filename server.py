@@ -36,7 +36,7 @@ users = {} #hopefully this can be changed from update roster
 
 #WHat the actual is this thing doing.
 def updateRoster():
-    print 'in updateRoster'
+    print 'IN UPDATEROSTER'
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     users_select_string = "SELECT users FROM users;"
@@ -50,13 +50,14 @@ def updateRoster():
         #need to check in database here?
         for bob_guy in users:
             print bob_guy
-            bobstr = str(bob_guy)
-            print bobstr
         
         #its getting a thing that looks like this: ['(1,SpiderBall,sb)'] and more stuff like it
+        thingToPutInNames = users[0]
+        print thingToPutInNames
         
-        print users[0]
-         
+        for item in names:
+            print 'meow'
+            print 'a thing in names is:' + item
         #for user_id in users:
         #    print users[user_id]['username'] #user_id is one of the users, and we are grabbing
                                                 #the username for each user
@@ -66,8 +67,6 @@ def updateRoster():
         #        names.append('Anonymous')
         #    else:
         #        names.append(users[user_id]['username'])
-        
-        print names
         
         #This broadcasting names thing happens a lot. seems each time you call identify 
         #and login
@@ -84,7 +83,7 @@ def updateRoster():
 #for right now at least
 @socketio.on('connect', namespace='/chat') #handles the connect event
 def test_connect():
-    print 'in connect'
+    print 'IN CONNECT'
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     
@@ -118,10 +117,10 @@ def test_connect():
 #THIS IS ON LINE 55 IN INDEX.HTML $scope.send - emits message and text
 @socketio.on('message', namespace='/chat')
 def new_message(message):
-    print 'in message'
+    print 'IN MESSAGE'
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    print message
+    print 'the message typed was:' + message
    
     messageToGoInDB = message
     originalPosterID = 78
@@ -136,7 +135,7 @@ def new_message(message):
     conn.commit()
     
     #take what is in the database, take from the users column and then make it into a python dict called users
-    tmp = {'text':message, 'username':'testName'}
+    tmp = {'text':message, 'username':'testNameYup'}
     #user is not a real thing yet, its also just an iterator in python. 
     #users is supposed to be the results from the database.
     
@@ -157,7 +156,7 @@ def new_message(message):
 # $scope.setName2 also emits identify, $scope.name2
 @socketio.on('identify', namespace='/chat')
 def on_identify(userTypedLoginInfo):
-    print 'in identify'
+    print 'IN IDENTIFY'
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     print 'identify' + userTypedLoginInfo
@@ -218,7 +217,7 @@ def on_login(loginInfo):
 #DISCONNECT
 @socketio.on('disconnect', namespace='/chat')
 def on_disconnect():
-    print 'disconnect'
+    print 'DISCONNECT'
     #disconnect happens when you close the thing!
     if session['uuid'] in users:
         del users[session['uuid']]
