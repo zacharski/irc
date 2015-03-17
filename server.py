@@ -111,6 +111,8 @@ def new_message(message):
         
     conn.commit()
     
+    #take what is in the database, take from the users column and then 
+    #make it into a python dict called users
     tmp = {'text':message, 'username':session['username']}
     
     thisSessionNum = session['uuid']
