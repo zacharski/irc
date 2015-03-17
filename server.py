@@ -242,9 +242,9 @@ def on_search(searchTerm):
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     #grab search term from database. 
-    searchTerm = 'dragon'
+    searchTerm = '%'+ searchTerm +'%'
     #make select statement and execute query
-    searchQuery = "SELECT message_content FROM messages WHERE message_content LIKE %%s%"
+    searchQuery = "SELECT message_content FROM messages WHERE message_content LIKE %s"
     try:
         cur.execute(searchQuery,(searchTerm,));
     except:
