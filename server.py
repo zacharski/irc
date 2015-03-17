@@ -66,6 +66,7 @@ def test_connect():
     for item in messages:
         emit('message', item)
 
+
 #MESSAGE
 #THIS IS ON LINE 55 IN INDEX.HTML $scope.send - emits message and text
 @socketio.on('message', namespace='/chat')
@@ -123,6 +124,7 @@ def new_message(message):
     
     emit('message', tmp, broadcast=True)
 
+
 #IDENTIFY    
 #LINE 76ish in index.html? $scope.setName - emits identify scope.name
 # $scope.setName2 also emits identify, $scope.name2
@@ -139,6 +141,7 @@ def on_identify(userTypedLoginInfo):
     #we might need to get the username from here and the password from here and get the thing
     users[session['uuid']]={'username':userTypedLoginInfo}
     updateRoster()
+   
     
 #LOGIN
 #around line 85 index.html $scope.processLogin - emits login, $scope.password
