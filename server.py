@@ -114,6 +114,8 @@ def new_message(message):
         
     conn.commit()
     
+    #take what is in the database, take from the users column and then 
+    #make it into a python dict called users
     tmp = {'text':message, 'username':session['username']}
     
     thisSessionNum = session['uuid']
@@ -145,6 +147,16 @@ def on_identify(userTypedLoginInfo):
     updateRoster()
    
     
+  
+@socketio.on('search')
+def on_search(searchValue):
+    conn = connectToDB()
+    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    print 'SEARCH'
+    search_select = "SELECT * FROM messages WHERE content LIKE %%s%;"
+    cur.execute(search_select, (searchValue,))
+    
+
 #LOGIN
 #around line 85 index.html $scope.processLogin - emits login, $scope.password
 @socketio.on('login', namespace='/chat')
@@ -234,6 +246,8 @@ def on_disconnect():
         updateRoster()
 
 
+
+
 @app.route('/')
 def hello_world():
     print 'in hello world'
@@ -259,4 +273,3 @@ if __name__ == '__main__':
     print "A"
 
     socketio.run(app, host=os.getenv('IP', '0.0.0.0'), port=int(os.getenv('PORT', 8080)))
-    print 'B'
