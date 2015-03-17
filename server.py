@@ -63,6 +63,8 @@ def test_connect():
     
     updateRoster()
     
+    
+    
     for item in messages:
         emit('message', item)
 
@@ -214,7 +216,8 @@ def on_login(loginInfo):
             print messageFromUsername
             print 'from:' + usernameName 
             count = count + 1
-    
+    #put emit here
+            emit('message', item)
     
      
     #what why is this commented out. zacharski did that and I don't know. 

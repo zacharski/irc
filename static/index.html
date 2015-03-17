@@ -64,17 +64,6 @@ if(showhide == "show"){
           $scope.$apply();
         });
 
-//DISPLAY PREVIOUS MESSAGES
-        socket.on('displayOldMessage', function (prevMsg) {
-          console.log(prevMsg);
-          $scope.searchResults.push(prevMsg);
-          $scope.$apply();
-          //var searchThread = document.getElementById('searchwindow');
-          //searchThread.scrollTop = searchThread.scrollHeight;
-        });
-
-
-
 //These things look like definitions more than anything else
 //SEND comment is around line 152
         $scope.send = function send() {
@@ -168,12 +157,6 @@ if(showhide == "show"){
                 <td class="span2" ng-bind="msg.username"></td>
                 <td class="span7" ng-bind="msg.text"></td>
               </tr>
-              
-              <tr ng-repeat="prevMsg in displayOldMessage">
-                <td class="span2" ng-bind="prevMsg.username"></td>
-                <td class="span7" ng-bind="prevMsg.text"></td>
-              </tr>
-              
             </tbody>
           </table>
           <div class="row controls">
