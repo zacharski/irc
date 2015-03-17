@@ -242,6 +242,7 @@ def on_search(searchTerm):
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     #grab search term from database. 
+    print searchTerm
     searchTerm = '%'+ searchTerm +'%'
     #make select statement and execute query
     searchQuery = "SELECT message_content FROM messages WHERE message_content LIKE %s"
@@ -253,7 +254,9 @@ def on_search(searchTerm):
     searchResults = cur.fetchall()
     #return and print results in chat messages
     for item in searchResults:
-        emit('message', item)
+        print str(item)
+        item = {'text': item[0]}
+        emit('search', item)
     #if time, then print out messages in another spot
     #do this by changing emit to send it somewhere else 
 
