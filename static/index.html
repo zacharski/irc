@@ -38,10 +38,13 @@ if(showhide == "show"){
       function ChatController($scope) {
         var socket = io.connect('https://' + document.domain + ':' + location.port + '/chat');
         //var socket = io.connect();
+        $scope.searchResults = [];
         $scope.messages = [];
         $scope.roster = [];
         $scope.name = '';
         $scope.text = '';
+        $scope.searchTerm = '';
+        
 
 //CONNECT - doesn't emit, only sets.
         socket.on('connect', function () {
@@ -56,6 +59,13 @@ if(showhide == "show"){
           $scope.messages.push(msg);
           $scope.$apply();
         });
+        
+//SEARCH LISTENER        
+        socket.on('search', function (searchItem) {
+          console.log(searchItem);
+          $scope.searchResults.push(searchItem);
+          $scope.$apply();
+        });
 
 //ROSTER STUFF? this doesn't emit anything, but it does apply stuff
         socket.on('roster', function (names) {
@@ -64,17 +74,6 @@ if(showhide == "show"){
           $scope.$apply();
         });
 
-//DISPLAY PREVIOUS MESSAGES
-        socket.on('displayOldMessage', function (prevMsg) {
-          console.log(prevMsg);
-          $scope.searchResults.push(prevMsg);
-          $scope.$apply();
-          //var searchThread = document.getElementById('searchwindow');
-          //searchThread.scrollTop = searchThread.scrollHeight;
-        });
-
-
-
 //These things look like definitions more than anything else
 //SEND comment is around line 152
         $scope.send = function send() {
@@ -82,6 +81,7 @@ if(showhide == "show"){
           socket.emit('message', $scope.text);
           $scope.text = ''; 
         };
+
 
 //IDENTIFY STUFF
         $scope.setName = function setName() {
@@ -93,21 +93,24 @@ if(showhide == "show"){
           $scope.$apply();
         };
 
+//SEARCH 
+        $scope.search = function search() {
+          console.log('Sending searchTerm:', $scope.searchTerm);
+          $scope.searchResults = [];
+          socket.emit('search', $scope.searchTerm);
+          $scope.searchTerm = '';
+          $scope.$apply();
+        };
+
 //PROCESS LOGIN
         $scope.processLogin = function processLogin() {
           console.log("Trying to log in");
           login('hide');
           //this is what happens when html file says processLogin
-          //need to create a dictionary here
-         //password and name2- what is an n-g model I dunno but I think we are using it
           
             var newInfo = {};
-//            document.writeln($scope.password);
-    //        document.writeln($scope.name2);
             newInfo['password'] = $scope.password;
             newInfo['username'] = $scope.name2;
-//            document.writeln("pass is:" + newInfo['password']);
-  //          document.writeln('user is:' + newInfo['username']);
           
           socket.emit('login', newInfo); 
         };
@@ -131,21 +134,17 @@ if(showhide == "show"){
 <br />
 
 </div> 
-
-      
       <!-- does something go here? -->
-      
-      
       <div class="navbar navbar-fixed-top navbar-inverse">
         <div class="navbar-inner">
           <div class="pull-right">
             <a href="https://c9.io" class="brand">Cloud9 IDE</a>
+            
 			<!-- THIS IS SEARCH BAR -->
-
-<center><input  ng-model="searchtext" type="searchtext" size="14" /></center>
-            	<input type="searchtext" class="span6"  placeholder="Make your searchy search">
-           		<input type="submit" class="span1 btn btn-primary" value="Go" ng-disabled="!searchtext">
-
+            <form ng-submit="search()">
+            	<input type="text" class="span6" ng-model="searchTerm" placeholder="Make your searchy search">
+           		<input type="submit" class="span1 btn btn-primary" value="Go" ng-disabled="!searchTerm"> 
+            </form>
           </div>
         </div>
       </div>
@@ -174,14 +173,24 @@ if(showhide == "show"){
                 <td class="span2" ng-bind="msg.username"></td>
                 <td class="span7" ng-bind="msg.text"></td>
               </tr>
-              
-              <tr ng-repeat="prevMsg in displayOldMessage">
-                <td class="span2" ng-bind="prevMsg.username"></td>
-                <td class="span7" ng-bind="prevMsg.text"></td>
-              </tr>
-              
             </tbody>
           </table>
+         <!-- trying to make another table yay --> 
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <!--<th class="span2">Name</th> -->
+                <th class="span7">Text</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="searchItem in searchResults">
+                <!--<td class="span2" ng-bind="item.username"></td> -->
+                <td class="span7" ng-bind="searchItem.text"></td>
+              </tr>
+            </tbody>
+          </table>
+          
           <div class="row controls">
             
             <!-- THIS IS SEND -->

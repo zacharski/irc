@@ -63,6 +63,8 @@ def test_connect():
     
     updateRoster()
     
+    
+    
     for item in messages:
         emit('message', item)
 
@@ -145,16 +147,6 @@ def on_identify(userTypedLoginInfo):
     updateRoster()
    
     
-  
-@socketio.on('search')
-def on_search(searchValue):
-    conn = connectToDB()
-    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    print 'SEARCH'
-    search_select = "SELECT * FROM messages WHERE content LIKE %%s%;"
-    cur.execute(search_select, (searchValue,))
-    
-
 #LOGIN
 #around line 85 index.html $scope.processLogin - emits login, $scope.password
 @socketio.on('login', namespace='/chat')
@@ -226,12 +218,48 @@ def on_login(loginInfo):
             print messageFromUsername
             print 'from:' + usernameName 
             count = count + 1
-    
+    #put emit here
+            emit('message', item)
     
      
     #what why is this commented out. zacharski did that and I don't know. 
     #users[session['uuid']]={'username':message}
     #updateRoster()
+
+#@socketio.on('search')
+#def on_search(searchValue):
+#    conn = connectToDB()
+#    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+#    print 'SEARCH'
+#    search_select = "SELECT * FROM messages WHERE content LIKE %%s%;"
+#    cur.execute(search_select, (searchValue,))
+
+
+#SEARCH RESULTS
+@socketio.on('search', namespace='/chat')
+def on_search(searchTerm):
+    print 'IN SEARCH'
+    conn = connectToDB()
+    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    #grab search term from database. 
+    print searchTerm
+    searchTerm = '%'+ searchTerm +'%'
+    #make select statement and execute query
+    searchQuery = "SELECT message_content FROM messages WHERE message_content LIKE %s"
+    try:
+        cur.execute(searchQuery,(searchTerm,));
+    except:
+        print 'could not execute search query!'
+        traceback.print_exc()
+    searchResults = cur.fetchall()
+    #return and print results in chat messages
+    for item in searchResults:
+        print str(item)
+        item = {'text': item[0]}
+        emit('search', item)
+    #if time, then print out messages in another spot
+    #do this by changing emit to send it somewhere else 
+
     
 #DISCONNECT
 @socketio.on('disconnect', namespace='/chat')
@@ -241,8 +269,6 @@ def on_disconnect():
     if session['uuid'] in users:
         del users[session['uuid']]
         updateRoster()
-
-
 
 
 @app.route('/')
@@ -270,4 +296,3 @@ if __name__ == '__main__':
     print "A"
 
     socketio.run(app, host=os.getenv('IP', '0.0.0.0'), port=int(os.getenv('PORT', 8080)))
-    print 'B'
