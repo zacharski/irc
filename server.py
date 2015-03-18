@@ -17,7 +17,7 @@ socketio = SocketIO(app)
 
 def connectToDB():
   #print 'in connectToDB'
-  connectionString = 'dbname=irc_db user=postgres password=pg host=localhost'
+  connectionString = 'dbname=irc_db user=irc_user password=irc host=localhost'
   try:
     return psycopg2.connect(connectionString)
   except:
