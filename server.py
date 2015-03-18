@@ -248,16 +248,10 @@ def on_search(searchTerm):
     searchResults = cur.fetchall()
     #return and print results in chat messages
     for item in searchResults:
-        print 'in for'
         print len(searchResults)
         if item:
-            print 'in if'
-            print item[0]
-            item = {'text': item[0]}
-            print 'set item'
-            print item
+            item = {'text': str(item[0])}
             emit('search', item)
-            print 'leaving if'
         else:
             print 'there is nothing here'
     #if time, then print out messages in another spot
