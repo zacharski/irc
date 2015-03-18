@@ -44,7 +44,6 @@ if(showhide == "show"){
         $scope.name = '';
         $scope.text = '';
 		$scope.searchTerm = '';
-		$scope.searchTerm2 = '';
 
 //CONNECT - doesn't emit, only sets.
         socket.on('connect', function () {
@@ -97,8 +96,8 @@ if(showhide == "show"){
 		$scope.search = function search() {
 			console.log('Sending searchTerm:', $scope.searchTerm);
 			$scope.searchResults = [];
-			socket.emit('search', $scope.searchTerm2);
-			$scope.searchTerm = $scope.searchTerm2;
+			socket.emit('search', $scope.searchTerm);
+			$scope.searchTerm = '';
 			$scope.$apply();
  		};
 
@@ -156,9 +155,6 @@ if(showhide == "show"){
 				<input type="text" class="span6" ng-model="searchTerm" placeholder="Make your searchy search">
 					<input type="submit" class="span1 btn btn-primary" value="Go" ng-disabled="!searchTerm">
 			</form>
-
-            	<input type="text" class="span6"  placeholder="Make your searchy search">
-           		<input type="submit" class="span1 btn btn-primary" value="Go" ng-disabled="!text">
 
           </div>
         </div>
