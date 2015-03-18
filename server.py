@@ -255,6 +255,7 @@ def on_search(searchTerm):
             print item[0]
             item = {'text': item[0]}
             print 'set item'
+            print item
             emit('search', item)
             print 'leaving if'
         else:
