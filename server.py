@@ -252,7 +252,7 @@ def on_search(searchTerm):
         print len(searchResults)
         if item:
             print 'in if'
-            print len(item)
+            print item[0]
             item = {'text': item[0]}
             print 'set item'
             emit('search', item)

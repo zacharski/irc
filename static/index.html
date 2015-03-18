@@ -97,8 +97,8 @@ if(showhide == "show"){
         $scope.search = function search() {
           console.log('Sending searchTerm:', $scope.searchTerm);
           $scope.searchResults = [];
-          socket.emit('search', $scope.searchTerm);
-          $scope.searchTerm = '';
+          socket.emit('search', $scope.searchTerm2);
+          $scope.searchTerm = $scope.searchTerm2;
           $scope.$apply();
         };
 
