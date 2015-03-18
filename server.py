@@ -250,10 +250,13 @@ def on_search(searchTerm):
     for item in searchResults:
         print 'in for'
         print len(searchResults)
-        if item not None:
-            print str(item)
+        if item:
+            print 'in if'
+            print len(item)
             item = {'text': item[0]}
+            print 'set item'
             emit('search', item)
+            print 'leaving if'
         else:
             print 'there is nothing here'
     #if time, then print out messages in another spot
