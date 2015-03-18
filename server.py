@@ -30,8 +30,7 @@ messages = [{'text':'test', 'name':'testName'}]
 #USERS IS A DICTIONARY
 users = {} 
 
-
-#WHat the actual is this thing doing.
+#What the actual is this thing doing.
 def updateRoster():
     print 'IN UPDATEROSTER'
     names = []
@@ -52,8 +51,7 @@ def test_connect():
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     
-    session['uuid']=uuid.uuid1()# each time a uuid is called,
-                                # a new number is returned
+    session['uuid']=uuid.uuid1()# each time a uuid is called, a new number is returned
 
     session['username']='starter name'
     #print 'connected'
@@ -68,6 +66,7 @@ def test_connect():
     for item in messages:
         emit('message', item)
 
+
 #MESSAGE
 #THIS IS ON LINE 55 IN INDEX.HTML $scope.send - emits message and text
 @socketio.on('message', namespace='/chat')
@@ -75,7 +74,6 @@ def new_message(message):
     print 'IN MESSAGE'
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    #testing statements
     #print 'the message typed was:' + message
     
     messageToGoInDB = message
@@ -89,11 +87,7 @@ def new_message(message):
     listOfPosterIDs = cur.fetchall()
     
     originalPosterID = -7
-    #testing statements
-    #for userId in listOfPosterIDs:
-    #    print 'the user id is:' + str(userId)
             
-    #set originalPosterId to correct ID
     #first get the username of the person who is posting.
     thisSessionNum = session['uuid']
     currentUsername = users[thisSessionNum]['username']
@@ -121,23 +115,17 @@ def new_message(message):
     #take what is in the database, take from the users column and then 
     #make it into a python dict called users
     tmp = {'text':message, 'username':session['username']}
-    #user is not a real thing yet, its also just an iterator in python. 
-    #users is supposed to be the results from the database.
     
     thisSessionNum = session['uuid']
     user = users[thisSessionNum]['username']
-    #print 'user is :' + user
     if user in users:
         tmp = {'text':message, 'username':user}
     
     #messages is a list of python dictionaries that look like {messages,users} 
     messages.append(tmp)
     
-    print("we are passing this stuff as tmp")
-    
-    #print messages here and find out what is being passed in
-    
     emit('message', tmp, broadcast=True)
+
 
 #IDENTIFY    
 #LINE 76ish in index.html? $scope.setName - emits identify scope.name
@@ -155,6 +143,7 @@ def on_identify(userTypedLoginInfo):
     #we might need to get the username from here and the password from here and get the thing
     users[session['uuid']]={'username':userTypedLoginInfo}
     updateRoster()
+   
     
   
 @socketio.on('search')
@@ -176,9 +165,9 @@ def on_login(loginInfo):
     
     usernameVar = loginInfo['username']
     passwordVar = loginInfo['password']
-    #THIS DOESN"T WORK YET
     #print 'user:' + loginInfo['username']
     #print 'pass:'  + loginInfo['password']
+    oldMessages = [{'text':'oldMessageInitText', 'username':'oldMessageInitUsername'}]
     
     user_select_string = "SELECT username FROM users WHERE username = %s AND password = %s;"
 
@@ -186,65 +175,60 @@ def on_login(loginInfo):
         cur.execute(user_select_string,(usernameVar, passwordVar));
         #print 'executed query'
         currentUser = cur.fetchone()
-
         if(currentUser is None):
             print 'this is not a valid login, please try again'
         else:
-            
-            #print 'successfully fetched one value'
-        
-            #print 'sessionuser:' + session['username']
-            #print 'sessionpass:' + session['password']        
-        
-            #print 'currentUser:' + str(currentUser)
-            #print 'sessionpass:' + session['password']        
-        
             session['username'] = currentUser['username']
-            #session['password'] = currentUser['password']
-
             print 'Logged on as:' + session['username'] 
     except:
         print 'could not execute login query!'
         traceback.print_exc()
     
     #printing all previous messages from database here.
-    #now get stuff from database and display that
-    messageQuery = "select message_content, original_poster_id from messages;"
-    
+    #this part grabs the stuff from messages
+    messageQuery = "SELECT message_content, original_poster_id FROM messages;"
     try:
         cur.execute(messageQuery)
     except:
         print("I couldn't grab messages from the previous database")
-    
     previousMessages = cur.fetchall()
-    oldMessages = {}
-    #oldMessagesInitialize = {'text':'oldMessageInitText', 'username':'oldMessageInitUsername'} 
-        
+    
     for message in previousMessages:
-        messagestr = str(message['message_content'])
-        print 'a previous message was:' + messagestr
+        messageStr = str(message['message_content'])
+        #print 'a previous message was:' + messageStr
         idStr = str(message['original_poster_id'])
         #print 'the users id was: ' + idStr
-        
-        #now get the id and match it with the username that it goes to
-        
-    #get posterId from messages
-    messagesPosterIdQuery = "SELECT original_poster_id FROM messages;"
-    try:
-        cur.execute(messagesPosterIdQuery)
-    except:
-        print("couldn't get posterID from messages!")
     
-    listOfPosterIDsFromMessages = cur.fetchall()
-
-    for messagesUserId in listOfPosterIDsFromMessages:
-        userIdStringFromInt = str(messagesUserId[0])
-        #print 'the user id is:' + userIdStringFromInt
+        #this part grabs the stuff from users
+        userQuery = "SELECT id, username FROM users WHERE id = %s;"
+        try:
+            cur.execute(userQuery, (idStr,))
+        except:
+            print("I couldn't grab users from database")
+        idMatchUserResults = cur.fetchall()    
+       
+        theUserMatchName = "" 
+        for user in idMatchUserResults:
+            #print 'the id is:' + idStr
+            theUserMatchName = user['username']
+            #print 'the username that hopefully matches is' + theUserMatchName
+        temp = {'text':messageStr, 'username':theUserMatchName}   
+        oldMessages.append(temp)
+        #oldMessages = [{'text':messageStr, 'username':theUserMatchName}]    
     
-        #oldMessages['username'] = 
+    count = 0   
+    for item in oldMessages:    
+        if count >= len(oldMessages):
+            thing = 'nope'
+        else :
+            usernameName = oldMessages[count]['username']
+            messageFromUsername = oldMessages[count]['text']
+            print messageFromUsername
+            print 'from:' + usernameName 
+            count = count + 1
     
     
-    
+     
     #what why is this commented out. zacharski did that and I don't know. 
     #users[session['uuid']]={'username':message}
     #updateRoster()
