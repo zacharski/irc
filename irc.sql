@@ -3,7 +3,7 @@ CREATE DATABASE irc_db;
 \c irc_db;
 
 create user irc_user with password 'irc';
-grant select insert on irc_db to irc_user;
+grant select, insert on irc_db to irc_user;
 grant all on sequence users_id_seq to irc_user;
 
 CREATE TABLE IF NOT EXISTS users (
