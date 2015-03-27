@@ -26,14 +26,13 @@ messages = [{'text':'test', 'name':'testName'}]
 
 #USERS IS A DICTIONARY
 users = {} 
-
-#What the actual is this thing doing.
+names = []
 app.debug = True
 
 socketio = SocketIO(app)
 
 messages = [{'text':'test', 'name':'testName'}]
-users = {}
+
 rooms = ['General']
 
 def updateRoster():
@@ -59,13 +58,13 @@ def test_connect():
     session['username']='starter name'
     #print 'connected'
     
-    #this means that it goes to the users list thing and gets the session id 
+    #this means that it goes to the users list and gets the session id 
     #this instance of the chat and makes the username field = new user
     
     users[session['uuid']]={'username':'New User'}
     
     updateRoster()
-    
+    updateRooms()
     
     
     for item in messages:
@@ -73,7 +72,7 @@ def test_connect():
 
 
 #MESSAGE
-#THIS IS ON LINE 55 IN INDEX.HTML $scope.send - emits message and text
+#THIS IS ON LINE THE IN INDEX.HTML $scope.send - emits message and text
 @socketio.on('message', namespace='/chat')
 def new_message(message):
     print 'IN MESSAGE'
@@ -133,21 +132,34 @@ def new_message(message):
 
 
 #IDENTIFY    
-#LINE 76ish in index.html? $scope.setName - emits identify scope.name
+#LINE in index.html with $scope.setName - emits identify scope.name
 # $scope.setName2 also emits identify, $scope.name2
 @socketio.on('identify', namespace='/chat')
 def on_identify(userTypedLoginInfo):
     print 'IN IDENTIFY'
-    conn = connectToDB()
-    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    # conn = connectToDB()
+    # cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     #print 'identify' + userTypedLoginInfo
     #the message here is where we need to connect to check against the database??
     
     #userTypedLogininfo is the real time variable that is displaying in the server console window and it is being displayed as 
     #the user types things into the username box.
     #we might need to get the username from here and the password from here and get the thing
-    users[session['uuid']]={'username':userTypedLoginInfo}
-    updateRoster()
+    if 'uuid' in session:
+        users[session['uuid']]={'username':userTypedLoginInfo}
+        updateRoster()
+    else:
+        print 'sending information'
+        session['uuid']=uuid.uuid1()
+        session['username']='starter name'
+  
+    
+        updateRoster()
+        updateRooms()
+
+        for message in messages:
+            emit('message', message)
+    
    
     
 #LOGIN
@@ -270,51 +282,21 @@ def on_disconnect():
         del users[session['uuid']]
         updateRoster()
 
-    socketio.emit('roster', names)
+    emit('roster', names)
     
 def updateRooms():
-    socketio.emit('rooms', rooms)
+    emit('rooms', rooms)
 
 
-@socketio.on('message')
-def new_message(message):
-    #tmp = {'text':message, 'name':'testName'}
-    tmp = {'text':message['text'], 'room':message['room'], 'name':users[session['uuid']]['username']}
-    messages.append(tmp)
-    emit('message', tmp, broadcast=True)
-    
-@socketio.on('identify')
-def on_identify(message):
-    
-    if 'uuid' in session:
-        users[session['uuid']]={'username':message}
-        updateRoster()
-    else:
-        print 'sending information'
-        session['uuid']=uuid.uuid1()
-        session['username']='starter name'
-  
-    
-        updateRoster()
-        updateRooms()
-
-        for message in messages:
-            emit('message', message)
-    
-@socketio.on('disconnect')
-def on_disconnect():
-    if session['uuid'] in users:
-        del users[session['uuid']]
-        updateRoster()
-    
-@app.route('/new_room', methods=['POST'])
-def new_room():
-    rooms.append(request.get_json()['name'])
+#this is so that i can avoid using superagent in js
+@socketio.on('new_room', namespace='/chat')
+def new_room(the_room): 
+    rooms.append(the_room)
     print 'updating rooms'
     updateRooms()
     print 'back'
 
-    return jsonify(success= "ok")
+    # return jsonify(success= "ok")
 
 @app.route('/')
 def hello_world():
@@ -341,3 +323,4 @@ if __name__ == '__main__':
     print "A"
 
     socketio.run(app, host=os.getenv('IP', '0.0.0.0'), port=int(os.getenv('PORT', 8080)))
+     
