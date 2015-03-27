@@ -121,7 +121,7 @@ if(showhide == "show"){
           if($scope.new_room_name.length>0)
           {
             // superagent.post('/new_room').send().end(function(err, result){
-            socket.emit('new_room', {name:$scope.new_room_name} );
+            socket.emit('new_room', $scope.new_room_name );
             // });
           }
 
