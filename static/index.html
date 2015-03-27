@@ -103,6 +103,7 @@ if(showhide == "show"){
 //scope.rooms 
         socket.on('rooms', function (rooms) {
           console.log("Got some new rooms");
+		  console.log(rooms);
           $scope.rooms = rooms;
           if(!$scope.current_room)
                 $scope.current_room=rooms[0];
@@ -226,7 +227,7 @@ if(showhide == "show"){
           <ul class="nav nav-list well">
             <li class="nav-header">Rooms</li>
             <li><input ng-model='new_room_name' type='text' style='width:100%'/><div ng-click='createRoom()'>Create</div></li>
-            <li ng-repeat="room in rooms" ng-bind="room" ng-click="changeRoom(room)" ng-class="{'current_room': room==current_room}">{{room}}hello</li>
+            <li ng-repeat="room in rooms" ng-bind="room" ng-click="changeRoom(room)" ng-class="{'current_room': room==current_room}">{{room}}</li>
           </ul>
           <ul class="nav nav-list well">
             <li class="nav-header">Local Users</li>
