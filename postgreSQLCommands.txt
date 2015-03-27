@@ -1,0 +1,23 @@
+Command cheat sheet
+
+change column name
+ALTER TABLE [tablename] RENAME COLUMN [oldname] TO [newname];
+
+copy table 
+CREATE TABLE [newtablename] AS SELECT [columns] FROM [existing];
+
+change column data type
+ALTER TABLE[tablename] ALTER COLUMN [columnname] TYPE [newtype]; 
+
+//first sprint thing
+username, password
+
+insert 
+INSERT INTO [tablename] VALUES 
+([value1],[value2], ... );
+
+
+
+
+update
+UPDATE [tablename] SET [column1]=[value1] ... WHERE [somecolumn] = [somevalue];
