@@ -26,14 +26,14 @@ messages = [{'text':'test', 'name':'testName'}]
 
 #USERS IS A DICTIONARY
 users = {} 
-
+names = []
 #What the actual is this thing doing.
 app.debug = True
 
 socketio = SocketIO(app)
 
 messages = [{'text':'test', 'name':'testName'}]
-users = {}
+
 rooms = ['General']
 
 def updateRoster():
@@ -65,7 +65,7 @@ def test_connect():
     users[session['uuid']]={'username':'New User'}
     
     updateRoster()
-    
+    updateRooms()
     
     
     for item in messages:
@@ -138,16 +138,29 @@ def new_message(message):
 @socketio.on('identify', namespace='/chat')
 def on_identify(userTypedLoginInfo):
     print 'IN IDENTIFY'
-    conn = connectToDB()
-    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    # conn = connectToDB()
+    # cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     #print 'identify' + userTypedLoginInfo
     #the message here is where we need to connect to check against the database??
     
     #userTypedLogininfo is the real time variable that is displaying in the server console window and it is being displayed as 
     #the user types things into the username box.
     #we might need to get the username from here and the password from here and get the thing
-    users[session['uuid']]={'username':userTypedLoginInfo}
-    updateRoster()
+    if 'uuid' in session:
+        users[session['uuid']]={'username':userTypedLoginInfo}
+        updateRoster()
+    else:
+        print 'sending information'
+        session['uuid']=uuid.uuid1()
+        session['username']='starter name'
+  
+    
+        updateRoster()
+        updateRooms()
+
+        for message in messages:
+            emit('message', message)
+    
    
     
 #LOGIN
@@ -270,51 +283,21 @@ def on_disconnect():
         del users[session['uuid']]
         updateRoster()
 
-    socketio.emit('roster', names)
+    emit('roster', names)
     
 def updateRooms():
-    socketio.emit('rooms', rooms)
+    emit('rooms', rooms)
 
 
-@socketio.on('message')
-def new_message(message):
-    #tmp = {'text':message, 'name':'testName'}
-    tmp = {'text':message['text'], 'room':message['room'], 'name':users[session['uuid']]['username']}
-    messages.append(tmp)
-    emit('message', tmp, broadcast=True)
-    
-@socketio.on('identify')
-def on_identify(message):
-    
-    if 'uuid' in session:
-        users[session['uuid']]={'username':message}
-        updateRoster()
-    else:
-        print 'sending information'
-        session['uuid']=uuid.uuid1()
-        session['username']='starter name'
-  
-    
-        updateRoster()
-        updateRooms()
 
-        for message in messages:
-            emit('message', message)
-    
-@socketio.on('disconnect')
-def on_disconnect():
-    if session['uuid'] in users:
-        del users[session['uuid']]
-        updateRoster()
-    
-@app.route('/new_room', methods=['POST'])
-def new_room():
-    rooms.append(request.get_json()['name'])
+@socketio.on('new_room', namespace='/chat')
+def new_room(the_room): 
+    rooms.append(the_room)
     print 'updating rooms'
     updateRooms()
     print 'back'
 
-    return jsonify(success= "ok")
+    # return jsonify(success= "ok")
 
 @app.route('/')
 def hello_world():
