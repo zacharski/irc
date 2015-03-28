@@ -13,6 +13,14 @@ CREATE TABLE IF NOT EXISTS users (
 	PRIMARY KEY (id)
 );
 
+CREATE TABLE IF NOT EXISTS rooms (
+	id serial,
+	roomname varchar(30),
+	user_in_room varchar(30),
+	PRIMARY KEY (id)
+);
+
+
 
 CREATE TABLE IF NOT EXISTS messages (
 	message_id serial,

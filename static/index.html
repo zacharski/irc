@@ -89,6 +89,12 @@ if(showhide == "show"){
 			 $scope.$apply();
  		 });
 
+//ROOM LISTENER
+    socket.on('rooms', function (room) )
+      //I know we need to grab the typed in rooms, and then pass them to python for doing stuff
+      $scope.roomsFromHtml(typedRoom)
+      $scope.$apply();
+    });
 
 //MESSAGE - doesn't emit, applies? 
 //scope.messages -  maybe like the conn.commit?
@@ -139,6 +145,7 @@ if(showhide == "show"){
 //These things look like definitions more than anything else
 //SEND comment is around line 152
         $scope.send = function send() {
+          //he added the room information as part of the message text
           console.log('Sending message:', $scope.text);
           socket.emit('message', $scope.text);
           $scope.text = ''; 
@@ -198,6 +205,10 @@ if(showhide == "show"){
 <center><input  ng-model="password" type="password" size="14" /></center>
 <!--- this value=Login used to say Send. I thought that was confusing -->
 <center><input type="submit" class="span1 btn btn-primary" value="Login" ng-disabled="!password"></center>
+<!-- this is stuff I added, don't know what I'm doing
+<center>Room:</center>
+<center><input type="text"  ng-model="room" ng-change="roomLogin()" placeholder="Room" size="14" /></center>
+-->
 </form>
 <br />
 

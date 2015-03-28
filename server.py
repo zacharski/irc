@@ -23,6 +23,8 @@ def connectToDB():
 
 messages = [{'text':'test', 'name':'testName'}]
 
+#the list of rooms
+rooms = []
 
 #USERS IS A DICTIONARY
 users = {} 
@@ -46,6 +48,11 @@ def updateRoster():
     traceback.print_exc()
     emit('roster', names, broadcast=True)
 
+#UPDATE ROOMS
+def updateRooms():
+    emit('rooms', rooms)
+
+
 #CONNECT    
 @socketio.on('connect', namespace='/chat') #handles the connect event
 def test_connect():
@@ -57,15 +64,21 @@ def test_connect():
 
     session['username']='starter name'
     #print 'connected'
+<<<<<<< Updated upstream
     
     #this means that it goes to the users list and gets the session id 
     #this instance of the chat and makes the username field = new user
     
+=======
+>>>>>>> Stashed changes
     users[session['uuid']]={'username':'New User'}
-    
     updateRoster()
+<<<<<<< Updated upstream
     updateRooms()
     
+=======
+    #call update rooms with update roster?
+>>>>>>> Stashed changes
     
     for item in messages:
         emit('message', item)
@@ -79,6 +92,7 @@ def new_message(message):
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     #print 'the message typed was:' + message
+    
     
     messageToGoInDB = message
     
@@ -125,6 +139,9 @@ def new_message(message):
     if user in users:
         tmp = {'text':message, 'username':user}
     
+    #messages needs the room stuff too!
+    #he added rooms into tmp, which means that it is a part of the message thing
+        
     #messages is a list of python dictionaries that look like {messages,users} 
     messages.append(tmp)
     
@@ -145,6 +162,7 @@ def on_identify(userTypedLoginInfo):
     #userTypedLogininfo is the real time variable that is displaying in the server console window and it is being displayed as 
     #the user types things into the username box.
     #we might need to get the username from here and the password from here and get the thing
+<<<<<<< Updated upstream
     if 'uuid' in session:
         users[session['uuid']]={'username':userTypedLoginInfo}
         updateRoster()
@@ -160,6 +178,11 @@ def on_identify(userTypedLoginInfo):
         for message in messages:
             emit('message', message)
     
+=======
+    users[session['uuid']]={'username':userTypedLoginInfo}
+    updateRoster()
+    #call update rooms with update roster?
+>>>>>>> Stashed changes
    
     
 #LOGIN
@@ -271,6 +294,10 @@ def on_search(searchTerm):
             print 'there is nothing here'
     #if time, then print out messages in another spot
     #do this by changing emit to send it somewhere else 
+
+
+#need another route here for rooms
+#call update rooms
 
     
 #DISCONNECT
