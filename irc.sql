@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS messages (
 	message_id serial,
 	original_poster_id int NOT NULL,
 	message_content VARCHAR(250),
+	room_id int NOT NULL,
 	PRIMARY KEY (message_id)
 );
 

@@ -5,7 +5,7 @@ import traceback
 import os
 import uuid
 from flask import Flask, session, jsonify, request
-from flask.ext.socketio import SocketIO, emit
+from flask.ext.socketio import SocketIO, emit, join_room, leave_room
 
 app = Flask(__name__, static_url_path='')
 app.config['SECRET_KEY'] = 'secret!'
@@ -51,6 +51,7 @@ def updateRoster():
 
 #UPDATE ROOMS
 def updateRooms():
+    #not sure if the thing needs to talk to the db here or somewhere else
     emit('rooms', rooms)
 
 
@@ -301,11 +302,6 @@ def on_disconnect():
 
     emit('roster', names)
     
-def updateRooms():
-    emit('rooms', rooms)
-
-
-
 @socketio.on('new_room', namespace='/chat')
 def new_room(the_room): 
     rooms.append(the_room)
