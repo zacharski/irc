@@ -1,5 +1,6 @@
 DROP DATABASE IF EXISTS irc_db;
 CREATE DATABASE irc_db;
+\c irc_db
 
 CREATE TABLE users (
 	id serial,
