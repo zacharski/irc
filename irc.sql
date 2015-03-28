@@ -13,30 +13,20 @@ CREATE TABLE users (
 	PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS rooms (
+CREATE TABLE rooms (
 	id serial,
 	roomname varchar(30),
 	user_in_room varchar(30),
 	PRIMARY KEY (id)
 );
 
-
-
 CREATE TABLE messages (
 	message_id serial,
 	original_poster_id int NOT NULL,
-	room_id int NOT NULL,
 	message_content VARCHAR(250),
 	room_id int NOT NULL,
 	PRIMARY KEY (message_id)
 );
-
-CREATE TABLE rooms (
-	room_id serial,
-	room_name varchar(30),
-	PRIMARY KEY (room_id)
-);
-
 
 INSERT INTO users (id, username, password) 
 VALUES 
