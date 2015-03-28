@@ -52,7 +52,34 @@ def updateRoster():
 #UPDATE ROOMS
 def updateRooms():
     #not sure if the thing needs to talk to the db here or somewhere else
+    roomInsertQuery="INSERT INTO rooms (roomname) VALUES (%s)" 
+    
+    try:
+        cur.execute(roomInsertQuery, room)
+    except:
+        print "I couldn't do the room insert augh"
+        traceback.print_exc()
+    
     emit('rooms', rooms)
+
+#maybe have a subscribe f(x) that determines whether or not join is called??
+
+#THIS IS NOT MINE COPIED FROM DOCUMENTATION, then edited a little bit
+@socketio.on('join', namespace='/chat')
+#data needs to become session stuff maybe???
+def on_join(data):
+    username = data['username']
+    room = data['room']
+    join_room(room)
+    send(username + ' has entered the room.', room=room)
+
+@socketio.on('leave', namespace='/chat')
+def on_leave(data):
+    username = data['username']
+    room = data['room']
+    leave_room(room)
+    send(username + ' has left the room.', room=room)
+#END COPIED FROM DOCS
 
 
 #CONNECT    
