@@ -6,7 +6,7 @@ create user irc_user with password 'irc';
 grant select, insert on irc_db to irc_user;
 grant all on sequence users_id_seq to irc_user;
 
-CREATE TABLE IF NOT EXISTS users (
+CREATE TABLE users (
 	id serial,
 	username varchar(30),
 	password varchar(30),
@@ -14,12 +14,20 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 
-CREATE TABLE IF NOT EXISTS messages (
+CREATE TABLE messages (
 	message_id serial,
 	original_poster_id int NOT NULL,
+	room_id int NOT NULL,
 	message_content VARCHAR(250),
 	PRIMARY KEY (message_id)
 );
+
+CREATE TABLE rooms (
+	room_id serial,
+	room_name varchar(30),
+	PRIMARY KEY (room_id)
+);
+
 
 INSERT INTO users (id, username, password) 
 VALUES 
