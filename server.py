@@ -52,13 +52,16 @@ def updateRoster():
 #UPDATE ROOMS
 def updateRooms():
     #not sure if the thing needs to talk to the db here or somewhere else
-    roomInsertQuery="INSERT INTO rooms (roomname) VALUES (%s)" 
     
-    try:
-        cur.execute(roomInsertQuery, room)
-    except:
-        print "I couldn't do the room insert augh"
-        traceback.print_exc()
+    #I know we need this, but not sure where to put it
+    
+#    roomInsertQuery="INSERT INTO rooms (roomname) VALUES (%s)" 
+    
+ #   try:
+  #      cur.execute(roomInsertQuery, room)
+  #  except:
+   #     print "I couldn't do the room insert augh"
+#        traceback.print_exc()
     
     emit('rooms', rooms)
 
