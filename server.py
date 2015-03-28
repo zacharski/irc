@@ -27,6 +27,7 @@ messages = [{'text':'test', 'name':'testName'}]
 #USERS IS A DICTIONARY
 users = {} 
 names = []
+#What the actual is this thing doing.
 app.debug = True
 
 socketio = SocketIO(app)
@@ -58,7 +59,7 @@ def test_connect():
     session['username']='starter name'
     #print 'connected'
     
-    #this means that it goes to the users list and gets the session id 
+    #this means that it goes to the users list thing and gets the session id 
     #this instance of the chat and makes the username field = new user
     
     users[session['uuid']]={'username':'New User'}
@@ -72,7 +73,7 @@ def test_connect():
 
 
 #MESSAGE
-#THIS IS ON LINE THE IN INDEX.HTML $scope.send - emits message and text
+#THIS IS ON LINE 55 IN INDEX.HTML $scope.send - emits message and text
 @socketio.on('message', namespace='/chat')
 def new_message(message):
     print 'IN MESSAGE'
@@ -132,7 +133,7 @@ def new_message(message):
 
 
 #IDENTIFY    
-#LINE in index.html with $scope.setName - emits identify scope.name
+#LINE 76ish in index.html? $scope.setName - emits identify scope.name
 # $scope.setName2 also emits identify, $scope.name2
 @socketio.on('identify', namespace='/chat')
 def on_identify(userTypedLoginInfo):
@@ -288,7 +289,7 @@ def updateRooms():
     emit('rooms', rooms)
 
 
-#this is so that i can avoid using superagent in js
+
 @socketio.on('new_room', namespace='/chat')
 def new_room(the_room): 
     rooms.append(the_room)
