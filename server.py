@@ -54,6 +54,7 @@ def updateRooms():
     #not sure if the thing needs to talk to the db here or somewhere else
     
     #I know we need this, but not sure where to put it
+    room = data['room']
     
     roomInsertQuery="INSERT INTO rooms (roomname) VALUES (%s)" 
     
