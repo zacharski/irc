@@ -151,9 +151,9 @@ def new_message(message):
     originalPosterID = usersIdResult[0] 
     
     #insert message into the database    
-    insertStatement = "INSERT INTO messages (original_poster_id, message_content) VALUES (%s, %s)"
+    insertStatement = "INSERT INTO messages (original_poster_id, message_content, room_id) VALUES (%s, %s, %s)"
     try: 
-        cur.execute(insertStatement, (originalPosterID, messageToGoInDB));
+        cur.execute(insertStatement, (originalPosterID, messageToGoInDB, ));
     except:
         print "there was an error with the insert"
         traceback.print_exc()

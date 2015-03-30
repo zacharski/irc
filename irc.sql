@@ -12,7 +12,6 @@ CREATE TABLE users (
 CREATE TABLE rooms (
 	id serial,
 	roomname varchar(30),
-	user_in_room varchar(30),
 	PRIMARY KEY (id)
 );
 
