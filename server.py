@@ -55,17 +55,18 @@ def updateRooms():
     
     #I know we need this, but not sure where to put it
     
-#    roomInsertQuery="INSERT INTO rooms (roomname) VALUES (%s)" 
+    roomInsertQuery="INSERT INTO rooms (roomname) VALUES (%s)" 
     
- #   try:
-  #      cur.execute(roomInsertQuery, room)
-  #  except:
-   #     print "I couldn't do the room insert augh"
-#        traceback.print_exc()
+    try:
+        cur.execute(roomInsertQuery, room)
+    except:
+        print "I couldn't do the room insert augh"
+        traceback.print_exc()
     
     emit('rooms', rooms)
 
-#maybe have a subscribe f(x) that determines whether or not join is called??
+#we also need a thing that pulls up messages from a chat
+#maybe have a subscribe function that determines whether or not join is called??
 
 #THIS IS NOT MINE COPIED FROM DOCUMENTATION, then edited a little bit
 @socketio.on('join', namespace='/chat')
@@ -164,7 +165,7 @@ def new_message(message):
         tmp = {'text':message, 'username':user}
     
     #messages needs the room stuff too!
-    #he added rooms into tmp, which means that it is a part of the message thing
+    #added rooms into tmp, which means that it is a part of the message thing
         
     #messages is a list of python dictionaries that look like {messages,users} 
     messages.append(tmp)
