@@ -54,7 +54,7 @@ def updateRooms():
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     
-    #I know we need this, but not sure where to put it
+    #data['room'] is NOT session['room'] (or its just out of scope)
     room = data['room']
     
     roomInsertQuery="INSERT INTO rooms (roomname) VALUES (%s)" 
@@ -101,6 +101,7 @@ def test_connect():
     session['uuid']=uuid.uuid1()# each time a uuid is called, a new number is returned
 
     session['username']='starter name'
+    session['room'] = 'General'
     #print 'connected'
     
     #this means that it goes to the users list thing and gets the session id 
@@ -300,6 +301,7 @@ def on_search(searchTerm):
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     #grab search term from database. 
     #somehow we need to get access to the current room
+    roomName = session['room']
     print roomName
     print searchTerm
     searchTerm = '%'+ searchTerm +'%'
@@ -344,6 +346,7 @@ def on_disconnect():
 def new_room(the_room): 
     print 'updating rooms'
     rooms.append(the_room)
+    session['room'] = the_room
     updateRooms()
     print 'back'
 
