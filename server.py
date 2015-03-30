@@ -51,7 +51,8 @@ def updateRoster():
 
 #UPDATE ROOMS
 def updateRooms():
-    #not sure if the thing needs to talk to the db here or somewhere else
+    conn = connectToDB()
+    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     
     #I know we need this, but not sure where to put it
     room = data['room']
@@ -64,7 +65,7 @@ def updateRooms():
         print "I couldn't do the room insert augh"
         traceback.print_exc()
     
-    emit('rooms', rooms)
+    
 
 #we also need a thing that pulls up messages from a chat
 #maybe have a subscribe function that determines whether or not join is called??
@@ -73,6 +74,8 @@ def updateRooms():
 @socketio.on('join', namespace='/chat')
 #data needs to become session stuff maybe???
 def on_join(data):
+    print "data username is " + data['username']
+    print "data room is " + data['room']
     username = data['username']
     room = data['room']
     join_room(room)
@@ -295,13 +298,15 @@ def on_search(searchTerm):
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     #grab search term from database. 
+    #somehow we need to get access to the current room
+    print roomName
     print searchTerm
     searchTerm = '%'+ searchTerm +'%'
     #make select statement and execute query
-    searchQuery = "SELECT message_content FROM messages WHERE message_content LIKE %s"
+    searchQuery = "SELECT messages.message_content FROM messages WHERE messages.message_content LIKE %s AND rooms.roomname = %s JOIN messages ON rooms.id = messages.room_id" #create a join to a room here
     try:
         print 'entering try'
-        cur.execute(searchQuery,(searchTerm,));
+        cur.execute(searchQuery,(roomName, searchTerm));
         print 'query successfully executed'
     except:
         print 'could not execute search query!'
@@ -336,8 +341,8 @@ def on_disconnect():
     
 @socketio.on('new_room', namespace='/chat')
 def new_room(the_room): 
-    rooms.append(the_room)
     print 'updating rooms'
+    rooms.append(the_room)
     updateRooms()
     print 'back'
 
