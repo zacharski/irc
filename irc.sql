@@ -19,7 +19,7 @@ CREATE TABLE rooms (
 CREATE TABLE subscriptions (
 	id serial,
 	room_id int NOT NULL,
-	user_id int NOT NULL
+	user_id int NOT NULL,
 	PRIMARY KEY (id)
 );
 
