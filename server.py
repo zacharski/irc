@@ -305,7 +305,7 @@ def on_search(searchTerm):
     print searchTerm
     searchTerm = '%'+ searchTerm +'%'
     #make select statement and execute query
-    searchQuery = "SELECT messages.message_content FROM messages WHERE messages.message_content LIKE %s AND rooms.roomname = %s JOIN messages ON rooms.id = messages.room_id" #create a join to a room here
+    searchQuery = "SELECT messages.message_content FROM messages WHERE messages.message_content LIKE %s AND rooms.roomname = %s INNER JOIN messages ON rooms.id = messages.room_id" 
     try:
         print 'entering try'
         cur.execute(searchQuery,(roomName, searchTerm));
