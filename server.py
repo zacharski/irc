@@ -71,23 +71,23 @@ def updateRooms():
 #maybe have a subscribe function that determines whether or not join is called??
 
 #THIS IS NOT MINE COPIED FROM DOCUMENTATION, then edited a little bit
-@socketio.on('join', namespace='/chat')
-#data needs to become session stuff maybe???
-def on_join(data):
-    print "data username is " + data['username']
-    print "data room is " + data['room']
-    username = data['username']
-    room = data['room']
-    join_room(room)
-    send(username + ' has entered the room.', room=room)
-
-@socketio.on('leave', namespace='/chat')
-def on_leave(data):
-    username = data['username']
-    room = data['room']
-    leave_room(room)
-    send(username + ' has left the room.', room=room)
-#END COPIED FROM DOCS
+#@socketio.on('join', namespace='/chat')
+##data needs to become session stuff maybe???
+#def on_join(data):
+#    print "data username is " + data['username']
+#    print "data room is " + data['room']
+#    username = data['username']
+#    room = data['room']
+#    join_room(room)
+#    send(username + ' has entered the room.', room=room)
+#
+#@socketio.on('leave', namespace='/chat')
+#def on_leave(data):
+#    username = data['username']
+#    room = data['room']
+#    leave_room(room)
+#    send(username + ' has left the room.', room=room)
+##END COPIED FROM DOCS
 
 
 #CONNECT    
