@@ -54,13 +54,12 @@ def updateRooms():
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     
-    #data['room'] is NOT session['room'] (or its just out of scope)
     room = session['room']
     
     roomInsertQuery="INSERT INTO rooms (roomname) VALUES (%s)" 
     
     try:
-        cur.execute(roomInsertQuery, room)
+        cur.execute(roomInsertQuery, (room,))
     except:
         print "I couldn't do the room insert augh"
         traceback.print_exc()
