@@ -16,6 +16,13 @@ CREATE TABLE rooms (
 	PRIMARY KEY (id)
 );
 
+CREATE TABLE subscriptions (
+	id serial,
+	room_id int NOT NULL,
+	user_id int NOT NULL
+	PRIMARY KEY (id)
+);
+
 CREATE TABLE messages (
 	message_id serial,
 	original_poster_id int NOT NULL,
