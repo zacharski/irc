@@ -64,7 +64,8 @@ def updateRooms():
     except:
         print "I couldn't do the room insert augh"
         traceback.print_exc()
-    
+
+    emit('rooms', rooms)    
     
 
 #we also need a thing that pulls up messages from a chat
