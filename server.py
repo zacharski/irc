@@ -346,6 +346,7 @@ def new_room(the_room):
     print 'updating rooms'
     rooms.append(the_room)
     session['room'] = the_room
+    print the_room
     updateRooms()
     print 'back'
 
