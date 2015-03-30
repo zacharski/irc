@@ -55,7 +55,7 @@ def updateRooms():
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     
     #data['room'] is NOT session['room'] (or its just out of scope)
-    room = data['room']
+    room = session['room']
     
     roomInsertQuery="INSERT INTO rooms (roomname) VALUES (%s)" 
     
