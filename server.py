@@ -59,6 +59,7 @@ def updateRooms():
     previous_rooms = cur.fetchall()
 
     for room in previous_rooms:
+        print room[1]
         rooms.append(room[1])
 
     emit('rooms', rooms)    
