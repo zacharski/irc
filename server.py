@@ -363,7 +363,7 @@ def on_search(searchTerm):
     searchQuery = "SELECT messages.message_content FROM messages WHERE messages.message_content LIKE %s AND rooms.roomname = %s INNER JOIN messages ON rooms.id = messages.room_id" 
     try:
         print 'entering try'
-        cur.execute(searchQuery,(roomName, searchTerm));
+        cur.execute(searchQuery,(searchTerm, roomName));
         print 'query successfully executed'
     except:
         print 'could not execute search query!'
