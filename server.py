@@ -79,7 +79,7 @@ def getRoomId(roomname):
 
     roomIdSelectQuery = "SELECT id FROM rooms WHERE roomname = %s;"
     
-    id = 0
+    id_dict = 0 #initializing id_dict, just in case
 
     try:
         print "trying to execute select room id"
@@ -88,7 +88,7 @@ def getRoomId(roomname):
         
         print "trying to grab id"
         id_dict = cur.fetchone()
-        print "this is the current room id" + id_dict[0]
+        print "this is the current room id" + str(id_dict[0])
 
 
     except:
