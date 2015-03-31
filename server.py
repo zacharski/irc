@@ -385,6 +385,8 @@ def on_disconnect():
     
 @socketio.on('new_room', namespace='/chat')
 def new_room(room): 
+    conn = connectToDB()
+    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     print 'updating rooms'
     rooms.append(room)
     session['room'] = room
