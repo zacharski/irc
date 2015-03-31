@@ -56,14 +56,19 @@ def updateRooms():
     
     room = session['room']
     
-    roomInsertQuery="INSERT INTO rooms (roomname) VALUES (%s)" 
+    roomInsertQuery="INSERT INTO rooms (id, roomname) VALUES (DEFAULT, %s)" 
     
+    #this pos isn't working, it either gives me a syntax error
+    #roomInsertQuery="INSERT INTO rooms (id, roomname) SELECT * FROM rooms WHERE NOT EXISTS (SELECT roomname FROM rooms WHERE roomname = %s)" 
     try:
         cur.execute(roomInsertQuery, (room,))
+        print "did the thing successfully I guess. after try and before emit"
     except:
         print "I couldn't do the room insert augh"
         traceback.print_exc()
-
+    
+    conn.commit()
+    
     emit('rooms', rooms)    
     
 
@@ -117,14 +122,23 @@ def test_connect():
 #MESSAGE
 #THIS IS ON LINE 55 IN INDEX.HTML $scope.send - emits message and text
 @socketio.on('message', namespace='/chat')
-def new_message(message):
+def new_message(message, roomName):
     print 'IN MESSAGE'
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     #print 'the message typed was:' + message
     
+    updateRooms()
+    print "just called update rooms, now back in message"
+    
     
     messageToGoInDB = message
+    print 'the message typed was:' + message
+    
+    print 'the room typed was:' + roomName
+   
+    roomNameQuery = "INSERT into" 
+    
     
     #get id here from users
     posterIdQuery = "SELECT id FROM users;"
@@ -149,16 +163,25 @@ def new_message(message):
     usersIdResult = cur.fetchone()
     
     originalPosterID = usersIdResult[0] 
+   
+    #get roomid here
+    
+        #first get room name from site?
+    
+    
+        #then do a select for the room id that matches that room name
+    #but we aren't inserting into the room table yet so we can't do that.
+    
     
     #insert message into the database    
     insertStatement = "INSERT INTO messages (original_poster_id, message_content) VALUES (%s, %s)"
-    try: 
-        cur.execute(insertStatement, (originalPosterID, messageToGoInDB));
-    except:
-        print "there was an error with the insert"
-        traceback.print_exc()
+    #try: 
+    #    cur.execute(insertStatement, (originalPosterID, messageToGoInDB));
+    #except:
+    #    print "there was an error with the insert"
+    #    traceback.print_exc()
         
-    conn.commit()
+    #conn.commit()
     
     #take what is in the database, take from the users column and then 
     #make it into a python dict called users
@@ -171,6 +194,10 @@ def new_message(message):
     
     #messages needs the room stuff too!
     #added rooms into tmp, which means that it is a part of the message thing
+    
+    #from zacharskis
+    tmp = {'text':message, 'room':roomName, 'username':users[session['uuid']]['username']}
+    
         
     #messages is a list of python dictionaries that look like {messages,users} 
     messages.append(tmp)
@@ -209,6 +236,7 @@ def on_identify(userTypedLoginInfo):
     
     users[session['uuid']]={'username':userTypedLoginInfo}
     updateRoster()
+    updateRooms()
     #call update rooms with update roster?
    
     

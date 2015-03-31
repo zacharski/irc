@@ -140,7 +140,7 @@ if(showhide == "show"){
 //SEND comment is around line 152
         $scope.send = function send() {
           console.log('Sending message:', $scope.text);
-          socket.emit('message', $scope.text);
+          socket.emit('message', $scope.text, $scope.current_room);
           $scope.text = ''; 
         };
 
