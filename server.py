@@ -163,8 +163,9 @@ def new_message(message, roomName):
     print 'the room typed was:' + roomName
    
     #roomNameQuery = "INSERT into" 
-    room_id = getRoomId(roomName)
-    print "this is the room id " + str(room_id)
+    temp_room_id = getRoomId(roomName)
+    print "this is the room id " + str(temp_room_id)
+    room_id = temp_room_id[0]
     
     #get id here from users
     posterIdQuery = "SELECT id FROM users;"
@@ -202,7 +203,7 @@ def new_message(message, roomName):
     #insert message into the database    
     insertStatement = "INSERT INTO messages (original_poster_id, message_content, room_id) VALUES (%s, %s, %s)"
     try: 
-        cur.execute(insertStatement, (originalPosterID, messageToGoInDB, room_id));
+        cur.execute(insertStatement, (originalPosterID, messageToGoInDB, int(room_id)));
     except:
         print "there was an error with the insert"
         traceback.print_exc()
