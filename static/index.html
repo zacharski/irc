@@ -108,8 +108,7 @@ if(showhide == "show"){
           if(!$scope.current_room)
                 $scope.current_room=rooms[0];
           
-		  #COMMENTING OUT FOR SCIENCE
-          #$scope.$apply();
+          $scope.$apply();
         });
 
         $scope.changeRoom = function(new_room)
