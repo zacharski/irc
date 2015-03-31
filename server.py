@@ -338,12 +338,12 @@ def on_login(loginInfo):
         traceback.print_exc()
     
     #printing all previous messages from database here.
+    subs_string = str(tuple(session['current_subs']))
     #this part grabs the stuff from messages
-    messageQuery = "SELECT message_content, original_poster_id FROM messages IN %s;"
+    messageQuery = "SELECT message_content, original_poster_id FROM messages IN %s;"%subs_string 
     try:
         print "entering try with current_subs"
-        subs_string = str(tuple(current_subs))
-        cur.execute(messageQuery, (subs_string,)) #this may not work, but imma try it
+        cur.execute(messageQuery) #this may not work, but imma try it
         print "successfully executed query"
         previousMessages = cur.fetchall()
         print "successfully fetched"
