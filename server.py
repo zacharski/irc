@@ -341,6 +341,7 @@ def on_login(loginInfo):
     subs_string = str(tuple(session['current_subs']))
     #this part grabs the stuff from messages
     messageQuery = "SELECT message_content, original_poster_id FROM messages IN %s;"%subs_string 
+    print messageQuery
     try:
         print "entering try with current_subs"
         cur.execute(messageQuery) #this may not work, but imma try it
