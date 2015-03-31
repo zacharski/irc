@@ -25,7 +25,7 @@ messages = [{'text':'test', 'name':'testName'}]
 
 #the list of rooms
 rooms = []
-printed = False
+#printed = False
 #USERS IS A DICTIONARY
 users = {} 
 names = []
@@ -58,13 +58,13 @@ def updateRooms():
     cur.execute(selectRoomsQuery)
     previous_rooms = cur.fetchall()
 
-    if not printed:
-        for room in previous_rooms:
-            rooms = []
-            print room[1]
-            rooms.append(room[1])
+    #if not printed:
+    for room in previous_rooms:
+        rooms = []
+        print room[1]
+        rooms.append(room[1])
 
-    printed = True
+    #printed = True
     emit('rooms', rooms)    
     
 
@@ -416,7 +416,7 @@ def new_room(room):
     
     conn.commit()
     print room
-    printed = False
+   # printed = False
     updateRooms()
     print 'back'
 
