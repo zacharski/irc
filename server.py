@@ -82,12 +82,17 @@ def getRoomId(roomname):
     try:
         print "trying to grab room id"
         cur.execute(roomIdSelectQuery, (roomname,))
-        print "sucessfully grabbed room id"
+        print "sucessfully executed select room id "
+        
+        try:
+            id = cur.fetchone()
+            print "this is the current room id" + id
+        except:
+            print "could not grab room id"
 
-        id = cur.fetchone()
 
     except:
-        print "could no grab room id"
+        print "could not execute select room id"
         traceback.print_exc()
 
 #we also need a thing that pulls up messages from a chat
