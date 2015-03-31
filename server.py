@@ -78,6 +78,8 @@ def getRoomId(roomname):
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
     roomIdSelectQuery = "SELECT room_id FROM rooms WHERE roomname = %s;"
+    
+    id = 0
 
     try:
         print "trying to execute select room id"
