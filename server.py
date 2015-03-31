@@ -54,20 +54,6 @@ def updateRooms():
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     
-    room = session['room']
-    
-    roomInsertQuery="INSERT INTO rooms (id, roomname) VALUES (DEFAULT, %s)" 
-    
-    #this pos isn't working, it either gives me a syntax error
-    #roomInsertQuery="INSERT INTO rooms (id, roomname) SELECT * FROM rooms WHERE NOT EXISTS (SELECT roomname FROM rooms WHERE roomname = %s)" 
-    try:
-        cur.execute(roomInsertQuery, (room,))
-        print "did the thing successfully I guess. after try and before emit"
-    except:
-        print "I couldn't do the room insert augh"
-        traceback.print_exc()
-    
-    conn.commit()
     
     emit('rooms', rooms)    
     
@@ -350,6 +336,7 @@ def on_login(loginInfo):
 #SEARCH RESULTS
 @socketio.on('search', namespace='/chat')
 def on_search(searchTerm):
+    #this searches in the room in session, not what users are subscribed to
     print 'IN SEARCH'
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -397,10 +384,24 @@ def on_disconnect():
     emit('roster', names)
     
 @socketio.on('new_room', namespace='/chat')
-def new_room(the_room): 
+def new_room(room): 
     print 'updating rooms'
-    rooms.append(the_room)
-    session['room'] = the_room
+    rooms.append(room)
+    session['room'] = room
+
+    
+    roomInsertQuery="INSERT INTO rooms (id, roomname) VALUES (DEFAULT, %s)" 
+    
+    #this pos isn't working, it either gives me a syntax error
+    #roomInsertQuery="INSERT INTO rooms (id, roomname) SELECT * FROM rooms WHERE NOT EXISTS (SELECT roomname FROM rooms WHERE roomname = %s)" 
+    try:
+        cur.execute(roomInsertQuery, (room,))
+        print "did the thing successfully I guess. after try and before emit"
+    except:
+        print "I couldn't do the room insert augh"
+        traceback.print_exc()
+    
+    conn.commit()
     print the_room
     updateRooms()
     print 'back'
