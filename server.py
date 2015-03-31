@@ -87,8 +87,8 @@ def getRoomId(roomname):
         print "sucessfully executed select room id "
         
         print "trying to grab id"
-        id = cur.fetchone()
-        print "this is the current room id" + id
+        id_dict = cur.fetchone()
+        print "this is the current room id" + id_dict[0]
 
 
     except:
