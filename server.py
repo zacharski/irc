@@ -80,11 +80,6 @@ def getSubscriptions(username):
         print "this person is subscribed to a chat with the id: " + sub[2]
         current_subs.append(sub[2]) #just stores room_id
 
-#select different messages based on which room you are in
-def switchRoom():
-    conn = connectToDB()
-    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-
 
 def getUserId(username):
     conn = connectToDB()
@@ -149,7 +144,7 @@ def on_join(data):
 
 @socketio.on('leave', namespace='/chat')
 def on_leave(data):
-    username = data['username']
+    #username = data['username']
     room = data['room']
     leave_room(room)
 #END COPIED FROM DOCS
