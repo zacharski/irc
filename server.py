@@ -369,7 +369,6 @@ def on_login(loginInfo):
     count = 0   
     for item in oldMessages:    
         if count >= len(oldMessages):
-            thing = 'nope'
         else :
             usernameName = oldMessages[count]['username']
             messageFromUsername = oldMessages[count]['text']
@@ -392,8 +391,6 @@ def on_search(searchTerm):
     print 'IN SEARCH'
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    #grab search term from database. 
-    #somehow we need to get access to the current room
     roomName = session['room']
     print roomName
     print searchTerm
@@ -419,9 +416,6 @@ def on_search(searchTerm):
     #if time, then print out messages in another spot
     #do this by changing emit to send it somewhere else 
 
-
-#need another route here for rooms
-#call update rooms
 
     
 #DISCONNECT
