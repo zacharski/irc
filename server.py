@@ -334,10 +334,13 @@ def on_login(loginInfo):
     #this part grabs the stuff from messages
     messageQuery = "SELECT message_content, original_poster_id FROM messages IN %s;"
     try:
+        print "entering try with current_subs"
         cur.execute(messageQuery, current_subs) #this may not work, but imma try it
+        print "successfully executed query"
+        previousMessages = cur.fetchall()
+        print "successfully fetched"
     except:
         print("I couldn't grab messages from the previous database")
-    previousMessages = cur.fetchall()
     
     for message in previousMessages:
         messageStr = str(message['message_content'])
