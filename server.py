@@ -25,7 +25,7 @@ messages = [{'text':'test', 'name':'testName'}]
 
 #the list of rooms
 rooms = []
-
+printed = false
 #USERS IS A DICTIONARY
 users = {} 
 names = []
@@ -47,6 +47,7 @@ def updateRoster():
             names.append(users[user_id]['username'])
     print 'broadcasting names'
     traceback.print_exc()
+    printed = false
     emit('roster', names, broadcast=True)
 
 #UPDATE ROOMS
@@ -58,12 +59,14 @@ def updateRooms():
     cur.execute(selectRoomsQuery)
     previous_rooms = cur.fetchall()
 
-    for room in previous_rooms:
-        print room[1]
-        rooms.append(room[1])
+    if not printed:
+        for room in previous_rooms:
+            print room[1]
+            rooms.append(room[1])
 
     emit('rooms', rooms)    
     
+
 
 
 def getRoomId(roomname):
