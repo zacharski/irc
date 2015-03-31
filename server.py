@@ -47,7 +47,6 @@ def updateRoster():
             names.append(users[user_id]['username'])
     print 'broadcasting names'
     traceback.print_exc()
-    printed = True 
     emit('roster', names, broadcast=True)
 
 #UPDATE ROOMS
@@ -61,9 +60,11 @@ def updateRooms():
 
     if not printed:
         for room in previous_rooms:
+            rooms = []
             print room[1]
             rooms.append(room[1])
 
+    printed = True
     emit('rooms', rooms)    
     
 
@@ -415,6 +416,7 @@ def new_room(room):
     
     conn.commit()
     print room
+    printed = False
     updateRooms()
     print 'back'
 
