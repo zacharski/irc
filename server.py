@@ -94,7 +94,7 @@ def getRoomId(roomname):
     except:
         print "could not execute select room id"
         traceback.print_exc()
-    return id
+    return id_dict
 
 #we also need a thing that pulls up messages from a chat
 #maybe have a subscribe function that determines whether or not join is called??
