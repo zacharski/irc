@@ -340,7 +340,7 @@ def on_login(loginInfo):
     #printing all previous messages from database here.
     subs_string = str(tuple(session['current_subs']))
     #this part grabs the stuff from messages
-    messageQuery = "SELECT message_content, original_poster_id FROM messages IN %s;"%subs_string 
+    messageQuery = "SELECT message_content, original_poster_id FROM messages WHERE room_id IN %s;"%subs_string 
     print messageQuery
     try:
         print "entering try with current_subs"
