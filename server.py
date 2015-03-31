@@ -123,7 +123,6 @@ def new_message(message):
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     #print 'the message typed was:' + message
     
-    
     messageToGoInDB = message
     
     #get id here from users
