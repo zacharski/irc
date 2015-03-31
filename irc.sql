@@ -43,3 +43,18 @@ VALUES
 (DEFAULT, 'Happy'),
 (DEFAULT, 'Sad'),
 (DEFAULT, 'Hungry');
+
+
+INSERT INTO subscriptions (id, room_id, user_id)
+VALUES
+(DEFAULT, 1, 1),
+(DEFAULT, 1, 2),
+(DEFAULT, 1, 3),
+(DEFAULT, 2, 1),
+(DEFAULT, 3, 2),
+(DEFAULT, 4, 1),
+(DEFAULT, 4, 2),
+(DEFAULT, 3, 3);
+/* sb is subscribed to happy hungry and general 
+   mp is subscribed to general sad and hungry 
+   lz is subscribed to general and sad */
