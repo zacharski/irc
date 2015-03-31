@@ -12,10 +12,7 @@ CREATE TABLE users (
 CREATE TABLE rooms (
 	id serial UNIQUE,
 	roomname varchar(30),
-<<<<<<< HEAD
-=======
 /*	user_in_room varchar(30), */
->>>>>>> ff311776ff909266a2bf8b7559365711191e63b9
 	PRIMARY KEY (id)
 );
 
