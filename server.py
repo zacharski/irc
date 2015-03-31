@@ -404,7 +404,7 @@ def new_room(room):
         traceback.print_exc()
     
     conn.commit()
-    print the_room
+    print room
     updateRooms()
     print 'back'
 
