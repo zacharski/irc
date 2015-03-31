@@ -369,6 +369,7 @@ def on_login(loginInfo):
     count = 0   
     for item in oldMessages:    
         if count >= len(oldMessages):
+            thing = 'nope'
         else :
             usernameName = oldMessages[count]['username']
             messageFromUsername = oldMessages[count]['text']
