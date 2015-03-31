@@ -54,7 +54,13 @@ def updateRooms():
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     
-    
+    selectRoomsQuery = "SELECT * FROM rooms;"
+    cur.execute(selectRoomsQuery)
+    previous_rooms = cur.fetchall()
+
+    for room in previous_rooms:
+        rooms.append(room)
+
     emit('rooms', rooms)    
     
 
