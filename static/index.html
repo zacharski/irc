@@ -113,7 +113,7 @@ if(showhide == "show"){
 
         $scope.changeRoom = function(new_room)
         {
-		  socket.emit('leave', current_room);	
+		  socket.emit('leave', $scope.current_room);	
           $scope.current_room=new_room;
 		  socket.emit('join', new_room);	
 
