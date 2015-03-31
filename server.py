@@ -77,7 +77,7 @@ def getRoomId(roomname):
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-    roomIdSelectQuery = "SELECT room_id FROM rooms WHERE roomname = %s;"
+    roomIdSelectQuery = "SELECT id FROM rooms WHERE roomname = %s;"
     
     id = 0
 
@@ -86,12 +86,9 @@ def getRoomId(roomname):
         cur.execute(roomIdSelectQuery, (roomname,))
         print "sucessfully executed select room id "
         
-        try:
-            print "trying to grab id"
-            id = cur.fetchone()
-            print "this is the current room id" + id
-        except:
-            print "could not grab room id"
+        print "trying to grab id"
+        id = cur.fetchone()
+        print "this is the current room id" + id
 
 
     except:
