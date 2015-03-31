@@ -308,7 +308,8 @@ def on_login(loginInfo):
     print 'IN LOGIN'
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    
+   
+    previousMessages = []
     usernameVar = loginInfo['username']
     passwordVar = loginInfo['password']
     #print 'user:' + loginInfo['username']
