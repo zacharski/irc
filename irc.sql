@@ -10,8 +10,12 @@ CREATE TABLE users (
 );
 
 CREATE TABLE rooms (
-	id serial,
+	id serial UNIQUE,
 	roomname varchar(30),
+<<<<<<< HEAD
+=======
+/*	user_in_room varchar(30), */
+>>>>>>> ff311776ff909266a2bf8b7559365711191e63b9
 	PRIMARY KEY (id)
 );
 
@@ -33,4 +37,5 @@ CREATE TABLE messages (
 INSERT INTO users (id, username, password) 
 VALUES 
 (DEFAULT, 'SpiderBall', 'sb'), 
-(DEFAULT, 'MidnaPeach', 'mp');
+(DEFAULT, 'MidnaPeach', 'mp'),
+(DEFAULT, 'lz', 'lz');
