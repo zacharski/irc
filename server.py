@@ -72,6 +72,24 @@ def updateRooms():
     emit('rooms', rooms)    
     
 
+
+def getRoomId(roomname):
+    conn = connectToDB()
+    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+    roomIdSelectQuery = "SELECT room_id FROM rooms WHERE roomname = %s;"
+
+    try:
+        print "trying to grab room id"
+        cur.execute(roomIdSelectQuery, (roomname,))
+        print "sucessfully grabbed room id"
+
+        id = cur.fetchone()
+
+    except:
+        print "could no grab room id"
+        traceback.print_exc()
+
 #we also need a thing that pulls up messages from a chat
 #maybe have a subscribe function that determines whether or not join is called??
 
