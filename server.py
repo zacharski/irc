@@ -139,13 +139,13 @@ def on_join(data):
     #print "data username is " + data['username']
     #print "data room is " + data['room']
     #username = data['username']
-    room = data['room']
+    room = data
     join_room(room)
 
 @socketio.on('leave', namespace='/chat')
 def on_leave(data):
     #username = data['username']
-    room = data['room']
+    room = data
     leave_room(room)
 #END COPIED FROM DOCS
 
@@ -313,7 +313,7 @@ def on_login(loginInfo):
     #print 'pass:'  + loginInfo['password']
     oldMessages = [{'text':'oldMessageInitText', 'username':'oldMessageInitUsername'}]
     
-    user_select_string = "SELECT username FROM users WHERE username = %s AND password = %s;"
+    user_select_string = "SELECT id, username FROM users WHERE username = %s AND password = %s;"
 
     try:
         cur.execute(user_select_string,(usernameVar, passwordVar));
@@ -323,6 +323,15 @@ def on_login(loginInfo):
             print 'this is not a valid login, please try again'
         else:
             session['username'] = currentUser['username']
+            subsSelectQuery = "SELECT room_id FROM subscriptions WHERE user_id = %s";
+            cur.execute(subsSelectQuery, (currentUser['id'],))
+            sub_results=cur.fetchall()
+            subscriptions = []
+            for sub in sub_results:
+                subscriptions.append(sub)
+            session['current_subs'] = subscriptions
+
+
             print 'Logged on as:' + session['username'] 
     except:
         print 'could not execute login query!'
@@ -333,7 +342,8 @@ def on_login(loginInfo):
     messageQuery = "SELECT message_content, original_poster_id FROM messages IN %s;"
     try:
         print "entering try with current_subs"
-        cur.execute(messageQuery, current_subs) #this may not work, but imma try it
+        subs_string = str(tuple(current_subs))
+        cur.execute(messageQuery, (subs_string,)) #this may not work, but imma try it
         print "successfully executed query"
         previousMessages = cur.fetchall()
         print "successfully fetched"
