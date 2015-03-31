@@ -36,3 +36,10 @@ VALUES
 (DEFAULT, 'SpiderBall', 'sb'), 
 (DEFAULT, 'MidnaPeach', 'mp'),
 (DEFAULT, 'lz', 'lz');
+
+INSERT INTO rooms (id, roomname)
+VALUES
+(DEFAULT, 'General'),
+(DEFAULT, 'Happy'),
+(DEFAULT, 'Sad'),
+(DEFAULT, 'Hungry');

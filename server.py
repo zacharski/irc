@@ -106,6 +106,7 @@ def test_connect():
 
     session['username']='starter name'
     session['room'] = 'General'
+    #session['room']['room_id'] = 
     #print 'connected'
     
     #this means that it goes to the users list thing and gets the session id 
