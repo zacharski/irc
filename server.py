@@ -29,6 +29,7 @@ rooms = []
 #USERS IS A DICTIONARY
 users = {} 
 names = []
+current_subs = []
 #What the actual is this thing doing.
 app.debug = True
 
@@ -67,6 +68,42 @@ def updateRooms():
     #printed = True
     emit('rooms', rooms)    
     
+
+def getSubscriptions(username):
+    conn = connectToDB()
+    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    user_id = getUserId(username)
+    selectSubQuery = "SELECT room_id FROM subscriptions WHERE user_id = %s;"
+    cur.execute(selectSubQuery, (user_id,))
+    subs = cur.fetchall()
+    for sub in subs:
+        print "this person is subscribed to a chat with the id: " + sub[2]
+        current_subs.append(sub[2]) #just stores room_id
+
+
+
+def getUserId(username):
+    conn = connectToDB()
+    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+    roomIdSelectQuery = "SELECT id FROM users WHERE username = %s;"
+    
+    id_dict = 0 #initializing id_dict, just in case
+
+    try:
+        print "trying to execute select room id"
+        cur.execute(roomIdSelectQuery, (username,))
+        print "sucessfully executed select room id "
+        
+        print "trying to grab id"
+        id_dict = cur.fetchone()
+        print "this is the current room id" + str(id_dict[0])
+
+
+    except:
+        print "could not execute select room id"
+        traceback.print_exc()
+    return id_dict
 
 
 
@@ -295,9 +332,9 @@ def on_login(loginInfo):
     
     #printing all previous messages from database here.
     #this part grabs the stuff from messages
-    messageQuery = "SELECT message_content, original_poster_id FROM messages;"
+    messageQuery = "SELECT message_content, original_poster_id FROM messages IN %s;"
     try:
-        cur.execute(messageQuery)
+        cur.execute(messageQuery, current_subs) #this may not work, but imma try it
     except:
         print("I couldn't grab messages from the previous database")
     previousMessages = cur.fetchall()
