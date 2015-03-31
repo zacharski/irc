@@ -25,7 +25,7 @@ messages = [{'text':'test', 'name':'testName'}]
 
 #the list of rooms
 rooms = []
-printed = false
+printed = False
 #USERS IS A DICTIONARY
 users = {} 
 names = []
@@ -47,7 +47,7 @@ def updateRoster():
             names.append(users[user_id]['username'])
     print 'broadcasting names'
     traceback.print_exc()
-    printed = false
+    printed = True 
     emit('roster', names, broadcast=True)
 
 #UPDATE ROOMS
