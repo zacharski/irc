@@ -59,8 +59,8 @@ def updateRooms():
     previous_rooms = cur.fetchall()
 
     #if not printed:
+    rooms = []
     for room in previous_rooms:
-        rooms = []
         print room[1]
         rooms.append(room[1])
 
