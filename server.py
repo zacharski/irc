@@ -328,7 +328,7 @@ def on_login(loginInfo):
             sub_results=cur.fetchall()
             subscriptions = []
             for sub in sub_results:
-                subscriptions.append(sub)
+                subscriptions.append(sub[0])
             session['current_subs'] = subscriptions
 
 
