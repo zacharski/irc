@@ -85,22 +85,22 @@ def getUserId(username):
     conn = connectToDB()
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-    roomIdSelectQuery = "SELECT id FROM users WHERE username = %s;"
+    userIdSelectQuery = "SELECT id FROM users WHERE username = %s;"
     
     id_dict = 0 #initializing id_dict, just in case
 
     try:
         print "trying to execute select room id"
-        cur.execute(roomIdSelectQuery, (username,))
+        cur.execute(userIdSelectQuery, (username,))
         print "sucessfully executed select room id "
         
         print "trying to grab id"
         id_dict = cur.fetchone()
-        print "this is the current room id" + str(id_dict[0])
+        print "this is the current user id  " + str(id_dict[0])
 
 
     except:
-        print "could not execute select room id"
+        print "could not execute select user id"
         traceback.print_exc()
     return id_dict
 
