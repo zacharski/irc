@@ -127,7 +127,7 @@ def getRoomId(roomname):
     except:
         print "could not execute select room id"
         traceback.print_exc()
-    return id_dict
+    return id_dict[0]
 
 #we also need a thing that pulls up messages from a chat
 #maybe have a subscribe function that determines whether or not join is called??
@@ -139,7 +139,18 @@ def on_join(data):
     #print "data username is " + data['username']
     #print "data room is " + data['room']
     #username = data['username']
+    conn = connectToDB()
+    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    selectMessagesQuery = "SELECT original_poster_id as name, message_content as text FROM messages INNER JOIN users ON users.id = messages.original_poster_id WHERE room_id = %s"
     room = data
+	
+    cur.execute(selectMessagesQuery, (getRoomId(data),))
+    results = cur.fetchall()
+    for result in results:
+       print result
+       result = { 'name' : result['name'], 'text' : result['text']}
+       emit('message', (result,))
+
     join_room(room)
 
 @socketio.on('leave', namespace='/chat')
