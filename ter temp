@@ -1,0 +1,342 @@
+*   [33m58c3fc8[m[33m ([1;36mHEAD[m[33m, [1;32mtemp[m[33m)[m Merge branch 'master' of https://github.com/SpiderBall/irc into HEAD
+[31m|[m[32m\[m  
+[31m|[m * [33me079cc3[m[33m ([1;31morigin/master[m[33m, [1;31morigin/HEAD[m[33m, [1;32mmaster[m[33m)[m moved insert to new_room function, added select statement to updaterooms
+* [32m|[m [33m7cea163[m trying to use data as a session
+* [32m|[m [33mfa2130b[m put the insert statements back in update rooms
+[32m|[m[32m/[m  
+* [33me0b8088[m uncommented updateRooms just to see what it does
+* [33m649d6dd[m added a comma
+* [33md9c492d[m added subscriptions table
+* [33m777f861[m screwed it up so that it doesnt add tables to irc_db, fixed that
+* [33m25692cb[m fixed some small things in the irc.sql file
+* [33m8dee071[m just realized that michelle also edited the irc.sql file, changed it so that both of our changes work
+*   [33m6729cc8[m Merge branch 'master' of https://github.com/SpiderBall/irc changed irc.sql and michelle added stuff
+[33m|[m[34m\[m  
+[33m|[m *   [33mba09ff1[m Merge branch 'master' of https://github.com/SpiderBall/irc michelle added stuff i think
+[33m|[m [35m|[m[36m\[m  
+[33m|[m * [36m|[m [33mcee8a6f[m added a rooms table to the sql file, now associates each message with a room id
+* [36m|[m [36m|[m [33m4a2c126[m Everything I have for now, trying to get chat to communicate with room db table
+* [36m|[m [36m|[m [33mbbe684a[m Updated readme
+* [36m|[m [36m|[m [33m2bf9662[m Imported the join_room and leave_room also did some other stuff with irc.sql
+* [36m|[m [36m|[m [33m746df8b[m The current room now displays above the chat window
+* [36m|[m [36m|[m   [33m688c394[m doin a thing so up to date on login for reals Merge https://github.com/SpiderBall/irc
+[1;31m|[m[36m\[m [36m\[m [36m\[m  
+[1;31m|[m [36m|[m [36m|[m[36m/[m  
+[1;31m|[m [36m|[m[36m/[m[36m|[m   
+[1;31m|[m * [36m|[m [33ma1b174a[m log in should work
+[1;31m|[m [36m|[m[36m/[m  
+* [36m|[m [33ma13c9d1[m hopefully up to date for sprint2
+* [36m|[m [33me97b97c[m merging bc unmerged ugh
+* [36m|[m   [33mb202a80[m there is no steak Merge https://github.com/SpiderBall/irc
+[1;33m|[m[36m\[m [36m\[m  
+[1;33m|[m [36m|[m[36m/[m  
+[1;33m|[m * [33mc8af551[m maybe fixed object error
+[1;33m|[m * [33m4d7f46d[m bkashfd
+[1;33m|[m * [33m617c7c4[m added hello to see if i know where the problem is
+[1;33m|[m * [33m80d40a8[m rooms are doing a thing now
+[1;33m|[m * [33m3b12b26[m cleanup
+[1;33m|[m *   [33mb9dcedd[m laskjfMerge branch 'master' of https://github.com/SpiderBall/irc
+[1;33m|[m [1;35m|[m[1;36m\[m  
+[1;33m|[m [1;35m|[m * [33md9ba809[m nevermine
+[1;33m|[m * [1;36m|[m   [33mb29ab04[m Merge branch 'master' of https://github.com/SpiderBall/irc aklsejf
+[1;33m|[m [31m|[m[1;36m\[m [1;36m\[m  
+[1;33m|[m [31m|[m [1;36m|[m[1;36m/[m  
+[1;33m|[m [31m|[m * [33m4b58ad5[m got rid of line printing near the msg box
+[1;33m|[m * [32m|[m   [33m643e069[m Merge branch 'master' of https://github.com/SpiderBall/irc commented out crap
+[1;33m|[m [33m|[m[32m\[m [32m\[m  
+[1;33m|[m [33m|[m [32m|[m[32m/[m  
+[1;33m|[m [33m|[m * [33m23820d8[m found why all that code was printing out, forgot to comment out something
+[1;33m|[m [33m|[m * [33m5e53d52[m cleaned up repo a bit
+[1;33m|[m * [34m|[m   [33mc113ede[m Merge branch 'master' of https://github.com/SpiderBall/irc hiiii
+[1;33m|[m [35m|[m[34m\[m [34m\[m  
+[1;33m|[m [35m|[m [34m|[m[34m/[m  
+[1;33m|[m [35m|[m *   [33m1f89003[m again?
+[1;33m|[m [35m|[m [1;31m|[m[1;32m\[m  
+[1;33m|[m [35m|[m * [1;32m|[m [33m321dea2[m will this push to master
+[1;33m|[m [35m|[m * [1;32m|[m [33m6bd0c54[m actually added files this time:
+[1;33m|[m * [1;32m|[m [1;32m|[m   [33m4fa1a26[m Merge branch 'master' of https://github.com/SpiderBall/irc added raz stuff
+[1;33m|[m [1;33m|[m[1;32m\[m [1;32m\[m [1;32m\[m  
+[1;33m|[m [1;33m|[m [1;32m|[m [1;32m|[m[1;32m/[m  
+[1;33m|[m [1;33m|[m [1;32m|[m[1;32m/[m[1;32m|[m   
+[1;33m|[m [1;33m|[m * [1;32m|[m [33m9d56092[m merged raz stuff
+[1;33m|[m * [1;34m|[m [1;32m|[m   [33m981b592[m Merge branch 'master' of https://github.com/SpiderBall/irc merging raz stuff
+[1;33m|[m [1;35m|[m[1;34m\[m [1;34m\[m [1;32m\[m  
+[1;33m|[m [1;35m|[m [1;34m|[m[1;34m/[m [1;32m/[m  
+[1;33m|[m * [1;34m|[m [1;32m|[m [33m782a4e0[m hi im commiting because reasons
+* [1;36m|[m [1;34m|[m [1;32m|[m   [33mec5d096[m Merging stuff Merge https://github.com/SpiderBall/irc
+[1;36m|[m[1;34m\[m [1;36m\[m [1;34m\[m [1;32m\[m  
+[1;36m|[m [1;34m|[m[1;36m/[m [1;34m/[m [1;32m/[m  
+[1;36m|[m[1;36m/[m[1;34m|[m [1;34m/[m [1;32m/[m   
+[1;36m|[m [1;34m|[m[1;34m/[m [1;32m/[m    
+[1;36m|[m * [1;32m|[m   [33ma154d34[m MERGED RAZ'S IRC
+[1;36m|[m [33m|[m[1;32m\[m [1;32m\[m  
+[1;36m|[m [33m|[m [1;32m|[m[1;32m/[m  
+[1;36m|[m [33m|[m * [33md8abc86[m Added notion of rooms
+[1;36m|[m [33m|[m * [33m187abde[m initial commit
+* [33m|[m [33m8ac972c[m This should be the last commit I think.
+[33m|[m[33m/[m  
+* [33m24e2105[m created a new user so that when someone runs the irc.sql they wont have to edit the server.py file at all
+* [33me6d8e9e[m playing around with the html
+* [33md84f0dc[m got it to work :D
+* [33ma21f14f[m still not working whyyyy
+* [33m9440e81[m trying something weird; adding the variable searchItem2 to see if transferrring the input from there to the output would solve the problem
+* [33m5d75b29[m added back those random lines i deleted
+* [33maba0d91[m the changes i just made earlier actually broke it, so im changing it back
+* [33m4859038[m set scope to another value in index.html
+* [33m65748a5[m added helpful print statements
+* [33mb606e68[m seeing if an if statement can help prevent more errors
+* [33medf1215[m added some print statements for diagnostics
+*   [33m3d8e1aa[m added michelle's change to search bar
+[35m|[m[36m\[m  
+[35m|[m * [33m2d2a2fb[m IT IS DONEEEEE
+[35m|[m * [33m217d605[m changed searchterm to work with %%
+[35m|[m *   [33m947d0f9[m Merge https://github.com/MidnaPeach/irc ;lk
+[35m|[m [1;31m|[m[1;32m\[m  
+[35m|[m [1;31m|[m * [33m1d15e5b[m This should be the up to date server.py
+[35m|[m [1;31m|[m *   [33m2f0d492[m Merge dammit
+[35m|[m [1;31m|[m [1;33m|[m[1;34m\[m  
+[35m|[m [1;31m|[m * [1;34m|[m [33m4dff89b[m Hey I just got the previous messages to display, now I'm working on search
+[35m|[m * [1;34m|[m [1;34m|[m   [33m11de73a[m fixing merge bullshit
+[35m|[m [1;35m|[m[1;34m\[m [1;34m\[m [1;34m\[m  
+[35m|[m [1;35m|[m [1;34m|[m [1;34m|[m[1;34m/[m  
+[35m|[m [1;35m|[m [1;34m|[m[1;34m/[m[1;34m|[m   
+[35m|[m * [1;34m|[m [1;34m|[m   [33mf740b03[m Merge https://github.com/MidnaPeach/irc michelle got message stuff working, just not showing up
+[35m|[m [31m|[m[32m\[m [1;34m\[m [1;34m\[m  
+* [31m|[m [32m\[m [1;34m\[m [1;34m\[m   [33ma55a672[m lsdkf
+[1;34m|[m[1;34m\[m [31m\[m [32m\[m [1;34m\[m [1;34m\[m  
+[1;34m|[m [1;34m|[m[1;34m_[m[31m|[m[1;34m_[m[32m|[m[1;34m/[m [1;34m/[m  
+[1;34m|[m[1;34m/[m[1;34m|[m [31m|[m [32m|[m [1;34m/[m   
+[1;34m|[m [1;34m|[m [31m|[m[1;34m_[m[32m|[m[1;34m/[m    
+[1;34m|[m [1;34m|[m[1;34m/[m[31m|[m [32m|[m     
+[1;34m|[m * [31m|[m [32m|[m [33m7a82d44[m This is the updated index.html, along with server.py to be sure
+[1;34m|[m * [31m|[m [32m|[m [33md9796c8[m This is me trying to get previous messages to display
+[1;34m|[m [32m|[m [31m|[m[32m/[m  
+[1;34m|[m [32m|[m[32m/[m[31m|[m   
+[1;34m|[m * [31m|[m [33m07a0a7a[m Grabbed all previous messages and their usernames. ugh.
+[1;34m|[m * [31m|[m [33m6e301dd[m Almost got previous messages loading
+* [34m|[m [31m|[m [33m380ee12[m adding michelles latest changes
+[31m|[m [34m|[m[31m/[m  
+[31m|[m[31m/[m[34m|[m   
+* [34m|[m   [33m4036add[m asx
+[35m|[m[36m\[m [34m\[m  
+[35m|[m * [34m|[m [33m68dfbe3[m moved search function up so that i can compare how other functions take data form html
+* [36m|[m [34m|[m [33me52ee37[m asodufh
+[36m|[m[36m/[m [34m/[m  
+* [34m|[m   [33m3498f43[m rge branch 'master' of https://github.com/SpiderBall/irc yup Conflicts: 	static/index.html
+[1;31m|[m[1;32m\[m [34m\[m  
+[1;31m|[m * [34m\[m   [33m75676ac[m Merge branch 'master' of https://github.com/SpiderBall/irc fixed search bar Conflicts: 	static/index.html
+[1;31m|[m [1;33m|[m[1;34m\[m [34m\[m  
+[1;31m|[m * [1;34m|[m [34m|[m [33m03dcf06[m made it so the search bar doesnt copy its text into message box
+* [1;34m|[m [1;34m|[m [34m|[m [33m494d5fe[m wrote search query
+[1;34m|[m [1;34m|[m[1;34m/[m [34m/[m  
+[1;34m|[m[1;34m/[m[1;34m|[m [34m|[m   
+* [1;34m|[m [34m|[m [33m6d59dab[m changed Search to go and switched the button and the text box
+[1;34m|[m[1;34m/[m [34m/[m  
+* [34m|[m [33m85b0679[m added text box to search bar
+* [34m|[m [33m13338e8[m attempted to add a search bar
+[34m|[m[34m/[m  
+*   [33m281b56b[m merging after a slight start over
+[1;35m|[m[1;36m\[m  
+[1;35m|[m * [33m0dc056b[m can successfully log in, just doesnt show up on the screen
+[1;35m|[m * [33m63fc65a[m cleaned up a bit, changed update roster back to what raz had, it turns out i fixed something that wasnt broken.
+* [1;36m|[m [33m1c5e400[m Have the messages from before displaying, and cleaned up some previous code.
+[1;36m|[m[1;36m/[m  
+* [33m057739f[m update roster officially works. the code looks pretty awful rn, but it works
+*   [33m4d58ff9[m lkxjvcMerge branch 'master' of https://github.com/SpiderBall/irc
+[31m|[m[32m\[m  
+[31m|[m * [33m97badd1[m trying to make sure count does not go out of bounds
+* [32m|[m   [33ma68800f[m asdfskjlfMerge branch 'master' of https://github.com/SpiderBall/irc
+[33m|[m[32m\[m [32m\[m  
+[33m|[m [32m|[m[32m/[m  
+[33m|[m * [33md47df57[m added count=0 and names[count][1] as a clever way to check each element for a name
+* [34m|[m   [33md2710e1[m aklsdfjMerge branch 'master' of https://github.com/SpiderBall/irc
+[35m|[m[34m\[m [34m\[m  
+[35m|[m [34m|[m[34m/[m  
+[35m|[m * [33mcc5f79b[m changed names to names[][1] to see if that will print just the name
+* [36m|[m   [33mff64fea[m skjkfMerge branch 'master' of https://github.com/SpiderBall/irc
+[1;31m|[m[36m\[m [36m\[m  
+[1;31m|[m [36m|[m[36m/[m  
+[1;31m|[m * [33m77f8a35[m changed item to item[1] to see if that would just print out names
+* [1;32m|[m   [33md4cb2d7[m Merge branch 'master' of https://github.com/SpiderBall/irc
+[1;33m|[m[1;32m\[m [1;32m\[m  
+[1;33m|[m [1;32m|[m[1;32m/[m  
+[1;33m|[m * [33mfdf5364[m i figured out why the whole list is printing, we needed to access name[1] and all of users
+* [1;34m|[m   [33m1c2db33[m kljdfMerge branch 'master' of https://github.com/SpiderBall/irc
+[1;35m|[m[1;34m\[m [1;34m\[m  
+[1;35m|[m [1;34m|[m[1;34m/[m  
+[1;35m|[m * [33m9990325[m changed names users to names=users[1] to see if that would just pass names (not the whole list)
+* [1;36m|[m   [33mee91ff9[m salkdf Merge branch 'master' of https://github.com/SpiderBall/irc
+[31m|[m[1;36m\[m [1;36m\[m  
+[31m|[m [1;36m|[m[1;36m/[m  
+[31m|[m * [33m722985e[m changed print item to print item[0]
+* [32m|[m   [33mcd9ca29[m dkjsgMerge branch 'master' of https://github.com/SpiderBall/irc
+[33m|[m[32m\[m [32m\[m  
+[33m|[m [32m|[m[32m/[m  
+[33m|[m * [33ma4253f7[m changed names = [] to names = users. hope this works
+* [34m|[m   [33m61f529c[m Merge branch 'master' of https://github.com/SpiderBall/irc lksajfd
+[35m|[m[34m\[m [34m\[m  
+[35m|[m [34m|[m[34m/[m  
+[35m|[m * [33ma5454af[m kljf
+[35m|[m *   [33m2e08540[m Merge https://github.com/MidnaPeach/irc applying michelle's latest changes
+[35m|[m [1;31m|[m[1;32m\[m  
+[35m|[m [1;31m|[m * [33mfb97129[m I'm adding things before I crash. >~< I'll be better tomorrow.
+[35m|[m * [1;32m|[m   [33m9481b85[m Merge https://github.com/MidnaPeach/irc michelle got messages to work
+[35m|[m [1;33m|[m[1;32m\[m [1;32m\[m  
+[35m|[m [1;33m|[m [1;32m|[m[1;32m/[m  
+[35m|[m [1;33m|[m * [33mf28de18[m Making stuff up to date.
+[35m|[m * [1;34m|[m   [33maef5cd5[m Merge https://github.com/MidnaPeach/irc michelle updated more stuff in index.html
+[35m|[m [1;35m|[m[1;34m\[m [1;34m\[m  
+[35m|[m [1;35m|[m [1;34m|[m[1;34m/[m  
+[35m|[m [1;35m|[m * [33m5fbb4ea[m Changed index.html name to username line 157
+[35m|[m * [1;36m|[m   [33m1d3a29f[m Merge https://github.com/MidnaPeach/irc michelle updated stuff
+[35m|[m [31m|[m[1;36m\[m [1;36m\[m  
+[35m|[m [31m|[m [1;36m|[m[1;36m/[m  
+[35m|[m [31m|[m * [33mdcc339f[m Changed a few variable names and adds a comment that explains what uuid does I think.
+[35m|[m * [32m|[m   [33m8d397b3[m Merge https://github.com/MidnaPeach/irc michelle got messagees working mostly
+[35m|[m [33m|[m[32m\[m [32m\[m  
+[35m|[m [33m|[m [32m|[m[32m/[m  
+[35m|[m [33m|[m * [33m7dae489[m Figuring out why it can't read users. bob guy to the rescue!
+[35m|[m [33m|[m *   [33m78b3e7f[m Did this work? Merge https://github.com/SpiderBall/irc
+[35m|[m [33m|[m [35m|[m[36m\[m  
+* [33m|[m [35m|[m [36m\[m   [33m2ce4c01[m as;lfjksMerge branch 'master' of https://github.com/SpiderBall/irc
+[1;31m|[m[33m\[m [33m\[m [35m\[m [36m\[m  
+[1;31m|[m [33m|[m[33m/[m [35m/[m [36m/[m  
+[1;31m|[m * [35m|[m [36m|[m   [33m29d48e3[m alkfderge https://github.com/MidnaPeach/irc
+[1;31m|[m [36m|[m[35m\[m [35m\[m [36m\[m  
+[1;31m|[m [36m|[m [35m|[m[35m/[m [36m/[m  
+[1;31m|[m [36m|[m [35m|[m [36m/[m   
+[1;31m|[m [36m|[m [35m|[m[36m/[m    
+[1;31m|[m [36m|[m[36m/[m[35m|[m     
+[1;31m|[m [36m|[m * [33mf9b0a51[m The message thingy inserts into the table oMG
+[1;31m|[m [36m|[m * [33m209dc65[m ehhhhhhhhsdfjkdsfkjh
+[1;31m|[m [36m|[m *   [33m140eca8[m Merge pull request #6 from SpiderBall/master
+[1;31m|[m [36m|[m [1;35m|[m[1;36m\[m  
+[1;31m|[m * [1;35m|[m [1;36m|[m [33mfb42da8[m skljf
+* [1;36m|[m [1;35m|[m [1;36m|[m   [33mb9de6f4[m skld;fja Merge branch 'master' of https://github.com/SpiderBall/irc
+[31m|[m[1;36m\[m [1;36m\[m [1;35m\[m [1;36m\[m  
+[31m|[m [1;36m|[m[1;36m/[m [1;35m/[m [1;36m/[m  
+[31m|[m * [1;35m|[m [1;36m|[m [33m53fe066[m null is None now
+* [32m|[m [1;35m|[m [1;36m|[m   [33m9db4fec[m saldfjMerge branch 'master' of https://github.com/SpiderBall/irc
+[33m|[m[32m\[m [32m\[m [1;35m\[m [1;36m\[m  
+[33m|[m [32m|[m[32m/[m [1;35m/[m [1;36m/[m  
+[33m|[m * [1;35m|[m [1;36m|[m [33m96a6ebd[m changed == to is
+[33m|[m [1;36m|[m [1;35m|[m[1;36m/[m  
+[33m|[m [1;36m|[m[1;36m/[m[1;35m|[m   
+* [1;36m|[m [1;35m|[m   [33me4222ed[m Merge branch 'master' of https://github.com/SpiderBall/irc merging my branch
+[35m|[m[1;36m\[m [1;36m\[m [1;35m\[m  
+[35m|[m [1;36m|[m[1;36m/[m [1;35m/[m  
+[35m|[m * [1;35m|[m   [33m95d9c3c[m Merge https://github.com/MidnaPeach/irc merrge michelles stuff , added error printing Conflicts: 	server.py
+[35m|[m [1;31m|[m[1;35m\[m [1;35m\[m  
+[35m|[m [1;31m|[m [1;35m|[m[1;35m/[m  
+[35m|[m [1;31m|[m * [33md77dad5[m Found out how to do error printing, which will save us hours. Trying to work on messages.
+* [1;31m|[m [1;32m|[m   [33mea54ce7[m jsklhfdMerge branch 'master' of https://github.com/SpiderBall/irc
+[1;33m|[m[1;31m\[m [1;31m\[m [1;32m\[m  
+[1;33m|[m [1;31m|[m[1;31m/[m [1;32m/[m  
+[1;33m|[m * [1;32m|[m [33mc2e70c2[m attempted error handling for login
+* [1;34m|[m [1;32m|[m [33m6d8d77e[m balsjkf
+* [1;34m|[m [1;32m|[m   [33m8aac8ed[m Merge branch 'master' of https://github.com/SpiderBall/irc nalshnfdi Conflicts: 	server.py
+[1;35m|[m[1;34m\[m [1;34m\[m [1;32m\[m  
+[1;35m|[m [1;34m|[m[1;34m/[m [1;32m/[m  
+[1;35m|[m * [1;32m|[m [33m91d6232[m removed session password
+[1;35m|[m * [1;32m|[m   [33m031e76b[m M;erge https://github.com/MidnaPeach/irc kdfj Conflicts: 	server.py
+[1;35m|[m [31m|[m[1;32m\[m [1;32m\[m  
+[1;35m|[m [31m|[m [1;32m|[m[1;32m/[m  
+[1;35m|[m [31m|[m * [33m18e8678[m We will get login to work. It is inevitable.
+[1;35m|[m * [32m|[m [33me226ef9[m stuff?
+* [32m|[m [32m|[m [33m361796f[m whatever
+* [32m|[m [32m|[m   [33m3ed7b4a[m Merge branch 'master' of https://github.com/SpiderBall/irc michelle updated things
+[33m|[m[32m\[m [32m\[m [32m\[m  
+[33m|[m [32m|[m[32m/[m [32m/[m  
+[33m|[m * [32m|[m   [33m0e1e1c1[m Merge https://github.com/MidnaPeach/irc elle fixed index.html and server.py loginInfo
+[33m|[m [35m|[m[32m\[m [32m\[m  
+[33m|[m [35m|[m [32m|[m[32m/[m  
+[33m|[m [35m|[m * [33m7fdc5ea[m Added index.html and a new server.py. Trying to get login variables.
+* [35m|[m [36m|[m   [33m2b7b8f1[m Merge branch 'master' of https://github.com/SpiderBall/irc
+[1;31m|[m[35m\[m [35m\[m [36m\[m  
+[1;31m|[m [35m|[m[35m/[m [36m/[m  
+[1;31m|[m * [36m|[m [33m4426b66[m found two semicolons that were breaking things
+[1;31m|[m [36m|[m[36m/[m  
+[1;31m|[m * [33m9420bb5[m Just double checking we are on the same page
+[1;31m|[m * [33mdc528eb[m put my stash back
+[1;31m|[m *   [33m6b5548b[m Merge pull request #8 from MidnaPeach/master
+[1;31m|[m [1;33m|[m[1;34m\[m  
+[1;31m|[m [1;33m|[m *   [33m0a5922d[m I'm trying to do a thing. Merge branch 'master' of https://github.com/SpiderBall/irc
+[1;31m|[m [1;33m|[m [1;35m|[m[1;33m\[m  
+[1;31m|[m [1;33m|[m [1;35m|[m[1;33m/[m  
+[1;31m|[m [1;33m|[m[1;33m/[m[1;35m|[m   
+[1;31m|[m [1;33m|[m * [33m5db13b1[m This sure is terrible message attempt.
+* [1;33m|[m [1;36m|[m [33m54be38c[m added print B, testing git stash
+[1;33m|[m[1;33m/[m [1;36m/[m  
+* [1;36m|[m [33m9ab6aea[m changed irc to irc_db
+* [1;36m|[m [33mf3d4de9[m added a means to execute a select users query in updateroster, fingers crossed
+* [1;36m|[m [33m7328fd2[m added print statements to see what each function does to the website
+* [1;36m|[m [33m2ae39eb[m added a login function that should work with postgres, committing to test on c9
+* [1;36m|[m   [33ma6f6567[m Merge pull request #7 from MidnaPeach/master
+[31m|[m[1;36m\[m [1;36m\[m  
+[31m|[m [1;36m|[m[1;36m/[m  
+[31m|[m * [33me62df68[m adding the fact that there is a username and password in the login function
+[31m|[m *   [33md3ffcb1[m Merge pull request #3 from SpiderBall/master
+[31m|[m [33m|[m[31m\[m  
+[31m|[m [33m|[m[31m/[m  
+[31m|[m[31m/[m[33m|[m   
+* [33m|[m   [33m06790da[m Merge pull request #6 from MidnaPeach/master
+[35m|[m[33m\[m [33m\[m  
+[35m|[m [33m|[m[33m/[m  
+[35m|[m *   [33m1e89ac7[m Merge pull request #2 from SpiderBall/master
+[35m|[m [1;31m|[m[1;32m\[m  
+* [1;31m|[m [1;32m|[m [33m995a1ac[m took out the penis
+[1;32m|[m [1;31m|[m[1;32m/[m  
+[1;32m|[m[1;32m/[m[1;31m|[m   
+* [1;31m|[m   [33m686db9c[m Merge pull request #5 from MidnaPeach/master
+[1;33m|[m[1;31m\[m [1;31m\[m  
+[1;33m|[m [1;31m|[m[1;31m/[m  
+[1;33m|[m * [33m365b07f[m testing
+* [1;34m|[m [33m577e3d9[m I added a penis
+* [1;34m|[m   [33m671d54f[m Merge branch 'master' of https://github.com/MidnaPeach/irc hi there im pulling from midna peach
+[1;35m|[m[1;34m\[m [1;34m\[m  
+[1;35m|[m [1;34m|[m[1;34m/[m  
+[1;35m|[m * [33mfe4decb[m I added conn stuff and cursor stuff into each socket function.
+* [1;36m|[m   [33m81f87c5[m Merge branch 'master' of https://github.com/MidnaPeach/irc pulling from Michelle
+[31m|[m[1;36m\[m [1;36m\[m  
+[31m|[m [1;36m|[m[1;36m/[m  
+[31m|[m *   [33m6d05a5a[m Merge pull request #1 from SpiderBall/master
+[31m|[m [33m|[m[34m\[m  
+* [33m|[m [34m\[m   [33ma6bfe96[m Merge branch 'master' of https://github.com/SpiderBall/irc i probably just deleted a line or something unimportant\
+[35m|[m[34m\[m [33m\[m [34m\[m  
+[35m|[m [34m|[m [33m|[m[34m/[m  
+[35m|[m [34m|[m[34m/[m[33m|[m   
+[35m|[m * [33m|[m   [33m4e84ce4[m Merge pull request #4 from MidnaPeach/master
+[35m|[m [1;31m|[m[33m\[m [33m\[m  
+[35m|[m [1;31m|[m [33m|[m[33m/[m  
+[35m|[m [1;31m|[m * [33m335ccc0[m I added some code, and more comments.
+[35m|[m [1;31m|[m * [33mc9ea566[m Yay this works now, git editor changed from nano, not really a thing for the irc project.
+[35m|[m [1;31m|[m * [33m9ac483b[m testy crap
+* [1;31m|[m [1;32m|[m [33m56d1282[m committing because i need to merge
+[1;31m|[m[1;31m/[m [1;32m/[m  
+* [1;32m|[m [33m2cf21dc[m added a comment above uuid
+* [1;32m|[m   [33m9d79c69[m hai Merge branch 'master' of https://github.com/SpiderBall/irc
+[1;33m|[m[1;34m\[m [1;32m\[m  
+[1;33m|[m * [1;32m\[m   [33md116a35[m Merge pull request #3 from MidnaPeach/master
+[1;33m|[m [1;35m|[m[1;32m\[m [1;32m\[m  
+[1;33m|[m [1;35m|[m [1;32m|[m[1;32m/[m  
+[1;33m|[m [1;35m|[m * [33m1b6d2f4[m I am adding a ton of comments to try to understand what is happening here.
+* [1;35m|[m [1;36m|[m [33m4ed052d[m committing because it told me to
+[1;35m|[m[1;35m/[m [1;36m/[m  
+* [1;36m|[m   [33m8f4ae22[m Merge pull request #2 from MidnaPeach/master
+[31m|[m[1;36m\[m [1;36m\[m  
+[31m|[m [1;36m|[m[1;36m/[m  
+[31m|[m * [33me29af70[m I think I just updated index, mostly I want to check if github and I are on the same page.
+* [32m|[m   [33m95ddef8[m Merge pull request #1 from MidnaPeach/master
+[33m|[m[32m\[m [32m\[m  
+[33m|[m [32m|[m[32m/[m  
+[33m|[m * [33m3c2f944[m A file that might be helpful.
+[33m|[m[33m/[m  
+* [33m5862c7f[m added Michelle's insert query
+* [33m4d73ca5[m added a comment to server.js
+* [33m3325d6e[m added connectToDB
+* [33mf7be5ba[m replaced varchar to bytea in irc.sql
+* [33m93ae88d[m changed binary to varchar(200) in message table
+* [33mb1e3cf6[m added irc.sql, just creates basic user and message tables
+* [33m1b96b96[m added dependencies
+* [33m31d9265[m Fixed readme
+* [33mca7fae8[m first coommit

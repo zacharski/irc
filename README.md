@@ -31,7 +31,36 @@ Welcome to your IRC project on Cloud9 IDE!
 2. Messages stored in database. 
 3. When a user logs in they will see some list of previous messages. 
 4. Search. I can search for a particular term and see the results.
+
+### Deliverables for Second Sprint
+1. the chat supports multiple rooms (EXAMPLE CODE: https://bitbucket.org/zacharski/irc.git)
+2. Users are subscribed to a set of rooms and cannot access rooms that they are not subscribed to.
+3. When a user searches for something the search takes place only in posts in rooms they are subscribed to
+4. all tables in 3NF
+Earn more XP by implementing other features that rely on a db. (for ex, a register an account popup)
+
+Still need to add stuff from Michelle's paper. She scribbled things while he was talking about stuff.
  
 ### You must host your code on github
 
 
+we still need to :
+    cake is great!
+    - do search stuff
+    - make it fail gracefully when user is not in the thing
+=======
+I'm pretty sure this isn't right. Stuff down there at least. Not running server from .js what.
+
+Welcome to your Node.js project on Cloud9 IDE!
+
+This chat example showcases how to use `socket.io` with a static `express` server.
+
+## Running the server
+
+1) Open `server.js` and start the app by clicking on the "Run" button in the top menu.
+
+2) Alternatively you can launch the app from the Terminal:
+
+    $ node server.js
+
+Once the server is running, open the project in the shape of 'https://projectname-username.c9.io/'. As you enter your name, watch the Users list (on the left) update. Once you press Enter or Send, the message is shared with all connected clients.
