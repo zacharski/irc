@@ -48,7 +48,7 @@ def on_identify(message):
     print 'identify' + message
     users[session['uuid']]={'username':message}
     updateRoster()
-
+ 
 
 @socketio.on('login', namespace='/chat')
 def on_login(pw):
