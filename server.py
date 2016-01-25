@@ -13,7 +13,7 @@ users = {}
 
 def updateRoster():
     names = []
-    for user_id in  users:
+    for user_id in users:
         print users[user_id]['username']
         if len(users[user_id]['username'])==0:
             names.append('Anonymous')
@@ -22,6 +22,7 @@ def updateRoster():
     print 'broadcasting names'
     emit('roster', names, broadcast=True)
     
+
 
 @socketio.on('connect', namespace='/chat')
 def test_connect():
@@ -32,9 +33,9 @@ def test_connect():
     users[session['uuid']]={'username':'New User'}
     updateRoster()
 
-
     for message in messages:
         emit('message', message)
+
 
 @socketio.on('message', namespace='/chat')
 def new_message(message):
@@ -42,6 +43,8 @@ def new_message(message):
     tmp = {'text':message, 'name':users[session['uuid']]['username']}
     messages.append(tmp)
     emit('message', tmp, broadcast=True)
+    
+    
     
 @socketio.on('identify', namespace='/chat')
 def on_identify(message):
@@ -53,9 +56,11 @@ def on_identify(message):
 @socketio.on('login', namespace='/chat')
 def on_login(pw):
     print 'login '  + pw
+    #we need to connect here.?
+
+    
     #users[session['uuid']]={'username':message}
     #updateRoster()
-
 
     
 @socketio.on('disconnect', namespace='/chat')
